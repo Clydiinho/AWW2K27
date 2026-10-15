@@ -5,6 +5,7 @@
   --color-gold: #d8b97a;
   --color-ivory: #f1ebe0;
   --color-diamond: #eaf3ff;
-  /* Temporary display stack only; real fonts arrive in the design prompt. */
-  --font-display: Georgia, "Times New Roman", serif;
+  /* Brand voice: self-hosted Griffiths for display + numerals; system sans for micro text. */
+  --font-display: "Griffiths", Georgia, "Times New Roman", serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
 }

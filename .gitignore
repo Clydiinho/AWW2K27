@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Secrets and local config (never commit)
+opencode.json
+.env
+.env.*
+.vercel
+
+# Raw AI-generated drafts (keep the credits file)
+assets-source/*
+!assets-source/CREDITS.md
+
+# Windows
+Thumbs.db

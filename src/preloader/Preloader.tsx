@@ -183,6 +183,14 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
       ref={overlayRef}
       className={fading ? "pp-overlay pp-fade-out" : "pp-overlay"}
     >
+      <img
+        className="pp-photo"
+        src="/pexels-scottwebb-136721.jpg"
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+        fetchPriority="high"
+      />
       <div
         ref={barRef}
         role="progressbar"

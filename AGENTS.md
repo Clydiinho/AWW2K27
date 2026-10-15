@@ -14,8 +14,12 @@ Preloader only. No home page: no header, nav, chapters, site copy,
 
 - Initial JavaScript under 100 KB gzipped.
 - First-load transfer under 150 KB.
-- No animation libraries, no three.js, no webfonts, no images,
-  no analytics, no external requests.
+- No animation libraries, no three.js, no webfonts, no analytics,
+  no external requests.
+- One user-supplied photographic backdrop is allowed on the preloader
+  only: `public/pexels-scottwebb-136721.jpg` (optimised to ~68 KB,
+  1024px, q55) at 17% opacity over the black base. It counts toward
+  the 150 KB transfer budget.
 - Animate only transform and opacity (plus stroke-dashoffset on the
   single progress arc). No SVG filters or blur on moving elements.
 
@@ -23,7 +27,8 @@ Preloader only. No home page: no header, nav, chapters, site copy,
 
 All colours and fonts come from `src/styles/tokens.css`
 (`--color-bg`, `--color-bg-glow`, `--color-bronze`, `--color-gold`,
-`--color-ivory`, `--color-diamond`, `--font-display`).
+`--color-ivory`, `--color-diamond`, `--font-display` for the
+self-hosted Griffiths brand face, `--font-sans` for micro text).
 Sparkle tints live in `src/preloader/config.ts`.
 
 ## 5. Preloader contract
@@ -74,6 +79,25 @@ never into the code.
 - Rule: the preloader never loads 3D assets (no library, model,
   texture, or WASM).
 - Brand text on the dial: `AWW2K27` (`BRAND_TEXT`, baseline `BRAND_Y`
-  in `src/preloader/config.ts`).
+  in `src/preloader/config.ts`) in solid ivory with wide tracking, plus
+  microline `AFRICA WATCH WEEK` (`BRAND_SUB_TEXT`, `BRAND_SUB_Y`).
+  Bezel is a dark diamond-set band with champagne hairlines (no gold disc).
+- Dial realism pass: baguette hour markers in gold chatons with
+  step-cut facets, 180-line brushed dial, gold baton minute track on a
+  chapter step,   two-tone dauphine hand, ruled microline signature with
+  diamond dots, bezel top-light sheen. Generated reference image was
+  used as a visual target only (never saved into the repo).
+- Passed diamonds keep a lingering champagne halo (gradient, opacity
+  only) that breathes softly; static under reduced motion.
+- Backdrop: user-supplied `public/pexels-scottwebb-136721.jpg`,
+  optimised in place from 1.5 MB to ~68 KB (1024px, q55), rendered at
+  17% opacity over black via `.pp-photo` (decorative, aria-hidden).
 - Env: node v25.6.0, npm 11.8.0. Build: JS 230.51 kB raw
   (71.90 kB gz), CSS 4.02 kB (1.43 kB gz), HTML 1.16 kB (0.63 kB gz).
+- Type: self-hosted `public/Griffiths.woff2` (3.3 kB, subset to
+  `AWW2K7` + digits + `%`, converted from the supplied OTF whose full
+  copy is kept outside the repo) via `@font-face`
+  with `font-display: swap` plus a same-origin preload. `--font-display`
+  (Griffiths) is used for the dial brand and the percentage numerals;
+  `--font-sans` (system stack) is used for the microline. No webfonts
+  or external requests.
