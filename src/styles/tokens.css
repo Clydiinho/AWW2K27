@@ -1,0 +1,10 @@
+:root {
+  --color-bg: #050505;
+  --color-bg-glow: #16120d;
+  --color-bronze: #b08a5b;
+  --color-gold: #d8b97a;
+  --color-ivory: #f1ebe0;
+  --color-diamond: #eaf3ff;
+  /* Temporary display stack only; real fonts arrive in the design prompt. */
+  --font-display: Georgia, "Times New Roman", serif;
+}
