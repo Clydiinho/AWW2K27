@@ -70,15 +70,15 @@
 .pp-brand {
   font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 400;
-  letter-spacing: 0.36em;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
 .pp-brand-sub {
   font-family: var(--font-sans);
   font-size: 10px;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
@@ -87,7 +87,7 @@
 .pp-brand-shine {
   font-family: var(--font-display);
   font-size: 24px;
-  letter-spacing: 0.36em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   opacity: 0;
   animation: pp-brand-sweep 700ms ease-out forwards;

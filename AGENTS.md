@@ -28,7 +28,10 @@ Preloader only. No home page: no header, nav, chapters, site copy,
 All colours and fonts come from `src/styles/tokens.css`
 (`--color-bg`, `--color-bg-glow`, `--color-bronze`, `--color-gold`,
 `--color-ivory`, `--color-diamond`, `--font-display` for the
-self-hosted Griffiths brand face, `--font-sans` for micro text).
+self-hosted Griffiths brand face,   `--font-sans` for micro text, now the self-hosted Outfit cut
+  (`public/outfit/Outfit-Regular.woff2`, subset to the ~40 glyphs
+  the site uses; the supplied full family was pruned to this one file
+  so it stays out of the transfer budget).
 Sparkle tints live in `src/preloader/config.ts`.
 
 ## 5. Preloader contract
@@ -79,8 +82,9 @@ never into the code.
 - Rule: the preloader never loads 3D assets (no library, model,
   texture, or WASM).
 - Brand text on the dial: `AWW2K27` (`BRAND_TEXT`, baseline `BRAND_Y`
-  in `src/preloader/config.ts`) in solid ivory with wide tracking, plus
-  microline `AFRICA WATCH WEEK` (`BRAND_SUB_TEXT`, `BRAND_SUB_Y`).
+  in `src/preloader/config.ts`) in solid ivory, tighter tracking, bold,
+  plus microline `AFRICA WATCH WEEK` (`BRAND_SUB_TEXT`, bold, set in
+  the bottom half at `BRAND_SUB_Y`).
   Bezel is a dark diamond-set band with champagne hairlines (no gold disc).
 - Dial realism pass: baguette hour markers in gold chatons with
   step-cut facets, 180-line brushed dial, gold baton minute track on a

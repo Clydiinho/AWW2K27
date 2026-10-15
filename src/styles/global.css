@@ -9,6 +9,15 @@
   font-display: swap;
 }
 
+/* Self-hosted sans for micro text (same origin, no external request). */
+@font-face {
+  font-family: "Outfit";
+  src: url("/outfit/Outfit-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {

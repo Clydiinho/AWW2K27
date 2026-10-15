@@ -7,8 +7,8 @@ export const SPARKLE_MS = 750; // One diamond glint duration.
 export const SPARKLE_LEAD_DEG = 4; // Sparkle fires this many degrees early.
 export const BRAND_TEXT = "AWW2K27"; // Dial brand mark.
 export const BRAND_Y = 158; // Brand baseline; move to clear pin/hand.
-export const BRAND_SUB_TEXT = "AFRICA WATCH WEEK"; // Microline under the monogram.
-export const BRAND_SUB_Y = 184; // Microline baseline, below BRAND_Y.
+export const BRAND_SUB_TEXT = "AFRICA WATCH WEEK"; // Microline, set in the bottom half.
+export const BRAND_SUB_Y = 242; // Microline baseline, below the centre pin.
 export const SHOW_ONLY_ONCE_PER_SESSION = false; // Switched on later for return visits.
 // Sparkle "fire" tints, kept out of tokens.css by spec.
 export const SPARKLE_TINT_ROSE = "#ffd9e2"; // Pale rose offset glint.

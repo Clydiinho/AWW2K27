@@ -288,7 +288,7 @@ export default function Dial({ handRef, arcRef, sparked, finale, shimmer, reduce
       {/* brand signature under hand: ink shadow, ivory monogram, ruled microline */}
       <g>
         <text
-          x={204}
+          x={203}
           y={BRAND_Y + 0.7}
           textAnchor="middle"
           className="pp-brand"
@@ -298,7 +298,7 @@ export default function Dial({ handRef, arcRef, sparked, finale, shimmer, reduce
           {BRAND_TEXT}
         </text>
         <text
-          x={204}
+          x={203}
           y={BRAND_Y}
           textAnchor="middle"
           className="pp-brand"
@@ -322,7 +322,7 @@ export default function Dial({ handRef, arcRef, sparked, finale, shimmer, reduce
         </text>
         {shimmer && (
           <text
-            x={204}
+            x={203}
             y={BRAND_Y}
             textAnchor="middle"
             className="pp-brand-shine"

@@ -5,7 +5,7 @@
   --color-gold: #d8b97a;
   --color-ivory: #f1ebe0;
   --color-diamond: #eaf3ff;
-  /* Brand voice: self-hosted Griffiths for display + numerals; system sans for micro text. */
+  /* Brand voice: self-hosted Griffiths for display + numerals; self-hosted Outfit for micro text. */
   --font-display: "Griffiths", Georgia, "Times New Roman", serif;
-  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
