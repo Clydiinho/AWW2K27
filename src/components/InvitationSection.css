@@ -1,0 +1,243 @@
+/* Chapter 01: editorial hero, invitation body, colophon. Mobile-first. */
+
+.chapter-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.4vmin, 24px);
+  text-align: center;
+  padding: 96px 24px 48px;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+  background: var(--color-bg);
+}
+
+/* Liquid-metal backdrop: canvas layer, legibility scrim, content above. */
+.chapter-hero-shader {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.chapter-hero-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.chapter-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(72vmin 72vmin at 50% 42%, rgba(5, 5, 5, 0) 30%, rgba(5, 5, 5, 0.66) 100%),
+    linear-gradient(to bottom, rgba(5, 5, 5, 0.6), rgba(5, 5, 5, 0.12) 38%, rgba(5, 5, 5, 0.9));
+}
+
+.chapter-hero > :not(.chapter-hero-shader):not(.chapter-hero-scrim) {
+  position: relative;
+  z-index: 2;
+}
+
+.chapter-eyebrow {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.chapter-headline {
+  margin: 0;
+  width: 100%;
+  max-width: 20ch;
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 6.4vw + 1rem, 4.2rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: 0.04em;
+  text-wrap: balance;
+  color: var(--color-ivory);
+}
+
+.chapter-headline-serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.18em;
+  letter-spacing: 0.01em;
+}
+
+.chapter-line {
+  display: block;
+}
+
+.chapter-tagline {
+  margin: 0;
+  width: 100%;
+  overflow-wrap: break-word;
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 2.4vw + 0.8rem, 1.5rem);
+  line-height: 1.4;
+  color: var(--color-gold);
+}
+
+.chapter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 20px;
+  margin-top: clamp(10px, 2vmin, 20px);
+}
+
+.chapter-btn {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  border-radius: 999px;
+  transition: opacity 200ms ease, transform 200ms ease, background-color 200ms ease;
+}
+
+.chapter-btn:active {
+  transform: scale(0.98);
+}
+
+.chapter-btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+.chapter-btn-primary {
+  color: #050505;
+  background: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+
+.chapter-btn-primary:hover {
+  opacity: 0.88;
+}
+
+.chapter-btn-secondary {
+  color: var(--color-ivory);
+  background: transparent;
+  border: 1px solid rgba(176, 138, 91, 0.55);
+}
+
+.chapter-btn-secondary:hover {
+  background: rgba(176, 138, 91, 0.14);
+}
+
+.chapter-invitation,
+.chapter-colophon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+  padding: clamp(72px, 12vh, 128px) 24px;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+  background: var(--color-bg);
+}
+
+.chapter-rule {
+  display: block;
+  width: 64px;
+  height: 1px;
+  background: var(--color-bronze);
+  opacity: 0.6;
+}
+
+.chapter-body {
+  margin: 0;
+  width: 100%;
+  max-width: 58ch;
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.6vw + 0.85rem, 1.2rem);
+  line-height: 1.75;
+  color: var(--color-ivory);
+  opacity: 0.92;
+}
+
+.chapter-colophon {
+  padding-top: 0;
+  padding-bottom: clamp(64px, 10vh, 110px);
+}
+
+.chapter-credit {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  opacity: 0.9;
+}
+
+/* Entrance: transform + opacity only, staggered through source order. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .chapter-hero.is-visible .chapter-tagline {
+    transition-delay: 120ms;
+  }
+
+  .chapter-hero.is-visible .chapter-actions {
+    transition-delay: 220ms;
+  }
+
+  .chapter-hero .chapter-eyebrow,
+  .chapter-hero .chapter-headline,
+  .chapter-hero .chapter-tagline,
+  .chapter-hero .chapter-actions {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .chapter-hero.is-visible .chapter-eyebrow,
+  .chapter-hero.is-visible .chapter-headline,
+  .chapter-hero.is-visible .chapter-tagline,
+  .chapter-hero.is-visible .chapter-actions {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+  }
+}

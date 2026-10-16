@@ -67,143 +67,6 @@
   display: block;
 }
 
-.pp-brand {
-  font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.pp-brand-sub {
-  font-family: var(--font-sans);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-}
-
-/* Shimmer sweep: duplicate text with white gradient, slides across once. */
-.pp-brand-shine {
-  font-family: var(--font-display);
-  font-size: 24px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  opacity: 0;
-  animation: pp-brand-sweep 700ms ease-out forwards;
-}
-
-@keyframes pp-brand-sweep {
-  0% {
-    opacity: 0;
-    transform: translateX(-22px);
-  }
-  30% {
-    opacity: 0.95;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(22px);
-  }
-}
-
-/* Idle bezel twinkle: opacity + transform only, staggered inline. */
-.pp-bezel-stone {
-  animation: pp-bezel-twinkle 3.6s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@keyframes pp-bezel-twinkle {
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: scale(0.82);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.12);
-  }
-}
-
-/* Hour diamond states: opacity only. */
-.pp-hour-dim {
-  transition: opacity 300ms ease;
-}
-
-.pp-hour-lit {
-  transition: opacity 300ms ease;
-}
-
-/* Lingering halo on passed diamonds: fades in, then breathes softly. */
-.pp-halo {
-  opacity: 0;
-  transition: opacity 600ms ease;
-}
-
-.pp-halo-lit {
-  opacity: 0.85;
-  transition: opacity 600ms ease;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .pp-halo-lit {
-    animation: pp-halo-breathe 2.6s ease-in-out infinite;
-  }
-}
-
-@keyframes pp-halo-breathe {
-  0%,
-  100% {
-    opacity: 0.65;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-
-/* Idle diamond glint: faint breathing on unlit stones, opacity only. */
-.pp-hour-idle {
-  animation: pp-hour-glint 4.2s ease-in-out infinite;
-}
-
-@keyframes pp-hour-glint {
-  0%,
-  100% {
-    opacity: 0.62;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* Sparkle star: scale 0-1-0, rotate 0-45deg over ~750ms, opacity peaks mid. */
-.pp-sparkle {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pp-sparkle-pop 750ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes pp-sparkle-pop {
-  0% {
-    opacity: 0;
-    transform: scale(0) rotate(0deg);
-  }
-  35% {
-    opacity: 1;
-    transform: scale(1) rotate(18deg);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(0.94) rotate(32deg);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0) rotate(45deg);
-  }
-}
-
 /* Percentage readout: Griffiths numerals, bronze-gold for 4.5:1 contrast. */
 .pp-pct {
   margin: 0;
@@ -218,22 +81,10 @@
   min-height: 20px;
 }
 
-/* Reduced motion: static entrance, no twinkle/sparkle/shimmer. */
+/* Reduced motion: static entrance, finished dial, plain quick fade. */
 @media (prefers-reduced-motion: reduce) {
   .pp-stage {
     animation: pp-enter-fade 300ms ease-out both;
-  }
-  .pp-bezel-stone,
-  .pp-hour-idle,
-  .pp-sparkle,
-  .pp-brand-shine {
-    animation: none !important;
-  }
-  .pp-sparkle {
-    opacity: 0.9;
-  }
-  .pp-brand-shine {
-    opacity: 0 !important;
   }
   .pp-overlay.pp-fade-out {
     transition-duration: 200ms;

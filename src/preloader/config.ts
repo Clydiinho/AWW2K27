@@ -14,3 +14,4 @@ export const SHOW_ONLY_ONCE_PER_SESSION = false; // Switched on later for return
 export const SPARKLE_TINT_ROSE = "#ffd9e2"; // Pale rose offset glint.
 export const SPARKLE_TINT_CYAN = "#d6f2ff"; // Pale cyan offset glint.
 export const REVIEW_PARAM = "pp"; // Review-only freeze control (?pp=0..1), remove before launch.
+export const BEAM_DEG = 20; // Bright edge window riding at the hand tip.
