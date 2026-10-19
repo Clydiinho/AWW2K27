@@ -1,0 +1,115 @@
+.scroll-badge {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: clamp(88px, 24vw, 128px);
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+.scroll-badge:focus-visible {
+  outline: 2px solid var(--color-bronze);
+  outline-offset: 4px;
+}
+
+/* Layer 1: the rotating ring. The HTML div rotates (not the SVG group),
+   which iOS Safari handles reliably. */
+.scroll-badge-ring {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  animation: scroll-badge-rotate var(--rotate-seconds, 14s) linear infinite;
+  will-change: transform;
+}
+
+.scroll-badge-ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-badge-hairline {
+  stroke: var(--color-line);
+  stroke-width: 0.4;
+}
+
+.scroll-badge-ring-text {
+  font-family: var(--font-sans);
+  font-size: 8.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  fill: var(--color-gold);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.scroll-badge-ring-text.is-measured {
+  opacity: 1;
+}
+
+/* Layer 2: the centre arrow. Centered with inset/margin (no translate), so
+   the pulse's scale is the only transform and it stays put while pulsing. */
+.scroll-badge-arrow-wrap {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 34%;
+  aspect-ratio: 1;
+  transform-origin: 50% 50%;
+  animation: scroll-badge-pulse var(--pulse-seconds, 1.6s) ease-in-out infinite;
+  will-change: transform;
+}
+
+.scroll-badge-arrow-wrap svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Pause both animations when off-screen or the tab is hidden (driven by the
+   .is-paused class from the IntersectionObserver / visibilitychange). */
+.scroll-badge.is-paused .scroll-badge-ring,
+.scroll-badge.is-paused .scroll-badge-arrow-wrap {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-badge-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scroll-badge-pulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(var(--pulse-scale, 1.3));
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Reduced motion: static badge, arrow at normal size. */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-badge-ring,
+  .scroll-badge-arrow-wrap {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+/* Smooth anchor scrolling only when motion is fine. */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+}

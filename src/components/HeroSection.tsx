@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { site } from "../content/site";
 import LiquidEther from "./LiquidEther";
+import ScrollBadge from "./ScrollBadge";
 import "./HeroSection.css";
 
 // Landing hero: invitation copy over the LiquidEther gold fluid backdrop.
@@ -54,29 +55,7 @@ export default function HeroSection() {
         ))}
       </h1>
       <p className="hero-tagline">{copy.tagline}</p>
-      <div className="hero-scroll" aria-hidden="true">
-        <svg className="hero-scroll-ring" viewBox="0 0 100 100">
-          <defs>
-            <path
-              id="scroll-ring-path"
-              fill="none"
-              d="M 50 50 m -38 0 a 38 38 0 1 1 76 0 a 38 38 0 1 1 -76 0"
-            />
-          </defs>
-          <text>
-            <textPath
-              href="#scroll-ring-path"
-              textLength="237"
-              lengthAdjust="spacingAndGlyphs"
-            >
-              {copy.scrollCta}
-            </textPath>
-          </text>
-        </svg>
-        <svg className="hero-scroll-arrow" viewBox="0 0 24 24">
-          <path d="M12 5.5 v13 M6.5 13 l5.5 5.5 L17.5 13" />
-        </svg>
-      </div>
+      <ScrollBadge />
     </section>
   );
 }
