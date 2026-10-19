@@ -25,7 +25,16 @@ export default function HeroSection() {
     <section className="hero" aria-labelledby="hero-headline">
       {!reducedMotion && (
         <div className="hero-ether" aria-hidden="true">
-          <LiquidEther colors={["#000000", "#eab308", "#000000"]} autoDemo />
+          <LiquidEther
+            colors={["#000000", "#eab308", "#000000"]}
+            mouseForce={11}
+            cursorSize={75}
+            persistence={0.75}
+            autoDemo
+            autoSpeed={0.5}
+            autoIntensity={2.2}
+            intensity={0.85}
+          />
         </div>
       )}
       <p className="hero-eyebrow">{copy.eyebrow}</p>
