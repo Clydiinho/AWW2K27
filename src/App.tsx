@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import Preloader from "./preloader/Preloader";
 import SiteHeader from "./components/SiteHeader";
-import InvitationSection from "./components/InvitationSection";
+import HeroSection from "./components/HeroSection";
 
 // Review-only control (REMOVE BEFORE LAUNCH):
 //   ?pp=0..1 freezes the preloader at that progress (e.g. ?pp=0.5) and
-//   suppresses completion, for checking hand positions + sparkles.
+//   suppresses completion, for checking hand position and reveal stage.
 export default function App() {
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true); // TEMP screenshot aid, revert to false.
   const handleComplete = useCallback(() => setDone(true), []);
 
   if (!done) {
@@ -18,7 +18,7 @@ export default function App() {
     <>
       <SiteHeader />
       <main id="site-root">
-        <InvitationSection />
+        <HeroSection />
       </main>
     </>
   );

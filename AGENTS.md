@@ -127,15 +127,15 @@ never into the code.
   and microline. Non-400 Outfit weights render synthesised until a
   Bold cut is supplied. No webfonts or external requests.
 - Task 01 (Chapter 01 landing): `src/content/site.ts` holds all
-  verbatim copy; `SiteHeader` (fixed, hairline rule) and
-  `InvitationSection` (100svh hero, invitation body, colophon) in
-  `src/components/`. Primary CTA scrolls to `#invitation`, secondary
-  to `#colophon` (no 3D exists yet; honest scroll targets only).
-- Hero backdrop: dependency-free raw-WebGL `LiquidMetalShader`
-  (`src/components/LiquidMetalShader.tsx` + module CSS, adapted from a
-  pasted shadcn-style snippet: no Tailwind, no `cn`/`@` alias, no
-  lucide, no demo file)   tuned to bronze (`#141210`/`#9c7c4c`/`#d8b97a`, slow drift, starts
-  mid-flow so the first and reduced-motion frames already show texture)
-  under a legibility scrim; pauses offscreen, static under reduced
-  motion, token fallback if WebGL is missing. Photo recompressed to
-  896px (~57 KB); total first-load ~142.7 kB gz, JS ~74.8 kB gz.
+  verbatim copy for the coming hero content; post-preloader currently
+  renders only the empty `HeroSection` (`src/components/HeroSection.tsx`)
+  carrying the GhostCursor backdrop. (The earlier header/invitation/
+  colophon pass was removed per direction; its files were deleted.)
+- Hero effect: `LiquidEther` (`src/components/LiquidEther.tsx` + CSS,
+  React-Bits fluid sim taken from the official TS registry as-is — only
+  `"use client"` dropped; no new deps) with the specified gold palette
+  (`#000000`/`#eab308`/`#000000`, auto-demo on), rendered only when
+  reduced motion is off; pauses offscreen, token fallback if WebGL2 is
+  missing. Verified live via CDP (auto-demo flow renders in brand gold).
+  Photo recompressed to 896px (~57 KB); total first-load ~146.4 kB gz,
+  JS ~78.7 kB gz.
