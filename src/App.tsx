@@ -7,7 +7,7 @@ import HeroSection from "./components/HeroSection";
 //   ?pp=0..1 freezes the preloader at that progress (e.g. ?pp=0.5) and
 //   suppresses completion, for checking hand position and reveal stage.
 export default function App() {
-  const [done, setDone] = useState(true); // TEMP screenshot aid, revert to false.
+  const [done, setDone] = useState(false);
   const handleComplete = useCallback(() => setDone(true), []);
 
   if (!done) {
