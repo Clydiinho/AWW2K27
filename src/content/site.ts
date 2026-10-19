@@ -6,8 +6,7 @@ export interface ChapterCopy {
   headline: string;
   body: string;
   tagline: string;
-  primaryAction: string;
-  secondaryAction: string;
+  scrollCta: string;
   credit: string;
 }
 
@@ -25,8 +24,7 @@ export const site: SiteContent = {
     headline: "WELCOME TO AFRICA WATCH WEEK",
     body: "An invitation to a select circle of organisations to help establish a new cultural platform celebrating horology, craftsmanship and collecting on the African continent.",
     tagline: "A new chapter in African horology begins.",
-    primaryAction: "PLAY THE 3D EXPERIENCE",
-    secondaryAction: "SCROLL TO EXPLORE",
+    scrollCta: "KEEP SCROLLING",
     credit: "AN EXPERIENCE BY THE INDEX AFRIKA",
   },
 };
