@@ -1,10 +1,18 @@
+import { useMemo } from "react";
 import { site } from "../content/site";
+import LiquidEther from "./LiquidEther";
 import "./HeroSection.css";
 
-// Landing hero: invitation copy over the charcoal surface. Editorial
-// content beyond this ships in a later step.
+// Landing hero: invitation copy over the LiquidEther gold fluid backdrop.
+// Editorial content beyond this ships in a later step.
 export default function HeroSection() {
   const copy = site.invitation;
+  const reducedMotion = useMemo(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    [],
+  );
   // Approved three-line lockup: WELCOME / TO AFRICA / WATCH WEEK,
   // with "WELCOME TO" in sans and the rest in Griffiths. The verbatim
   // string in site.ts is never altered; only grouping and per-word
@@ -15,6 +23,11 @@ export default function HeroSection() {
 
   return (
     <section className="hero" aria-labelledby="hero-headline">
+      {!reducedMotion && (
+        <div className="hero-ether" aria-hidden="true">
+          <LiquidEther colors={["#000000", "#eab308", "#000000"]} autoDemo />
+        </div>
+      )}
       <p className="hero-eyebrow">{copy.eyebrow}</p>
       <h1 id="hero-headline" className="hero-headline">
         {headlineLines.map((line, li) => (
