@@ -32,5 +32,8 @@ opencode.json
 assets-source/*
 !assets-source/CREDITS.md
 
+# Analysis scratch space
+.cache/
+
 # Windows
 Thumbs.db
