@@ -261,6 +261,12 @@ never into the code.
   NEXT labels measure 2.5–3.7:1 (needs 4.5:1, fails at alpha 0.8;
   reaching 4.5:1 on the bright scenes would need ~0.95 alpha which
   the approved cap 0.8 forbids — reported, decision to client).
+  (Scrim since REMOVED per user instruction — the eyebrow/headline
+  and NEXT link sit directly on the video; on fully-loaded bright
+  daylight frames the ivory headline drops to ~1.6–1.8:1 and the
+  gold labels to ~1:1, on dark/bootstrap-fallback frames both pass
+  — kept as history. The `.shine-border` ring outlines the WRAPPER
+  (title + glass + link), pre-existing since a414061.)
 - Frame loading is contiguous-front-first: 5 independent worker lanes
   each take the LOWEST frame index that is neither loaded nor in
   flight, so a hung/stalled request caps the loaded-set gap at

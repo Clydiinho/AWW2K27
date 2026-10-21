@@ -56,10 +56,8 @@
    fixed heights, no clipping — card height is always the natural text height,
    width follows the text via fit-content. The eyebrow + headline + NEXT link
    sit OUTSIDE the glass: the wrapper keeps the sizing rules and the entrance
-   animation, .story-panel-glass carries the glass look only.
-   --panel-scrim-a: static scrim alpha behind the header block and the link
-   (they sit directly on the video). */
-:root { --panel-scrim-a: 0.8; }
+   animation, .story-panel-glass carries the glass look only. No scrims —
+   the exposed text sits directly on the video (user instruction). */
 
 .story-panel {
   font-size: clamp(0.9375rem, 0.86rem + 0.35vw, 1.0625rem);
@@ -76,20 +74,6 @@
   transform: translateY(10px);
   transition: opacity 0.6s ease, transform 0.6s ease;
   pointer-events: auto;
-}
-
-/* static scrim behind the NOW-EXPOSED text (title top, link bottom): a soft
-   radial gradient, opacity-like alpha only, no blur/filter/animation.
-   ::after because .shine-border already owns this element's ::before. */
-.story-panel::after {
-  content: "";
-  position: absolute;
-  inset: -1em -2em;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(140% 40% at 30% 10%, rgba(5, 5, 5, var(--panel-scrim-a)) 0%, rgba(5, 5, 5, 0) 70%),
-    radial-gradient(160% 36% at 55% 87%, rgba(5, 5, 5, var(--panel-scrim-a)) 0%, rgba(5, 5, 5, 0) 70%);
 }
 
 /* the glass element: 100% of the wrapper's width; the wrapper's preferred
