@@ -57,8 +57,9 @@
    width follows the text via fit-content. The eyebrow + headline + NEXT link
    sit OUTSIDE the glass but INSIDE the shine-border outline: the wrapper
    owns a 1.5em / 1.25em padding so every child clears the ring line
-   (user instruction), .story-panel-glass carries the glass look only.
-   No scrims — the exposed text sits directly on the video. */
+   (user instruction), and the outlined wrapper itself is a WHITE
+   glassmorphism sheet — rgba(255,255,255,0.10) fill + white hairline +
+   the desktop 16px backdrop blur (same var as the dark glass). No scrims. */
 
 .story-panel {
   font-size: clamp(0.9375rem, 0.86rem + 0.35vw, 1.0625rem);
@@ -71,6 +72,9 @@
   margin-block: 1.5em;
   margin-inline: clamp(22px, 4vw, 64px);
   padding: 1.25em 1.5em;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.10);
   color: var(--color-ivory);
   opacity: 0;
   transform: translateY(10px);
@@ -261,6 +265,7 @@
 
 @media (min-width: 861px) {
   :root { --panel-alpha: 0.5; --panel-blur: blur(16px); }
+  .story-panel,
   .story-panel-glass { backdrop-filter: var(--panel-blur); -webkit-backdrop-filter: var(--panel-blur); }
 }
 

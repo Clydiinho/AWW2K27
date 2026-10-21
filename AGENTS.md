@@ -272,7 +272,11 @@ never into the code.
   (measured widths unchanged — 576/480/346 columns — heights + the
   new padding; the old 1.5em inline inset moved off the head/link
   onto the wrapper, so head/link/glass-text alignment and the
-  title+3em preferred width are preserved).
+  title+3em preferred width are preserved). Per user instruction the
+  outlined wrapper is itself a WHITE glassmorphism sheet: 28px radius,
+  1px rgba(255,255,255,0.18) hairline, rgba(255,255,255,0.10) fill,
+  and the 16px desktop backdrop blur (same var as the dark glass,
+  mobile fill-only); static transform/opacity-only CSS.
 - Frame loading is contiguous-front-first: 5 independent worker lanes
   each take the LOWEST frame index that is neither loaded nor in
   flight, so a hung/stalled request caps the loaded-set gap at
