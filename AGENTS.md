@@ -236,6 +236,31 @@ never into the code.
   with `?review=1`. Open questions live in `docs/BRIEF.md` (real
   Chapter 05 copy; final call to action; may the closing line appear
   twice — it is currently on both card 03 and card 05).
+- Card anatomy split (Task 02): the eyebrow + hairline, the `<h2>`
+  headline (`aria-labelledby` from each `.story-chapter` to
+  `#chapter-NN-title`) and the NEXT link sit OUTSIDE the glass as direct
+  children of `.story-panel-tilt`; only body/subline/lead/triplet/rooms/
+  closing (+ `?review=1` draft tag) stay inside `.story-panel-glass`.
+  The wrapper keeps ALL old sizing rules (fit-content, min/max, base
+  font, margins, entrance transition); `.story-panel-glass` is
+  `inline-size: 100%` and carries the glass look (alpha 0.74 / 0.50 +
+  16px blur ≥861px). The old 1.5em inline inset now lives on
+  `.story-panel-head` and on the `~ .cta-button / ~ .next-link`
+  siblings so their glyphs align with the glass text edge AND their
+  max-content (title + 3em) still drives the wrapper's preferred width
+  exactly like the old padded panel did — verified: glass widths are
+  pixel-identical to the pre-split card at 360/390/844×390/1440.
+  Measured heights grow by the reflowed header/link (~+0.9em, ~+1.9em
+  where a link exists). A static behind-text scrim
+  (`.story-panel::after` — NOT ::before, which `.shine-border` owns
+  with its ring mask) renders two radial rgba(5,5,5)
+  gradients with `--panel-scrim-a: 0.8` behind the title band and the
+  link band only. Pixel-verified contrast (glyph-dilated luminance
+  p99.5 vs rendered pixels): ivory headline 4.0–5.8:1 over all
+  sampled daylight frames (needs 3:1, passes); the gold eyebrow /
+  NEXT labels measure 2.5–3.7:1 (needs 4.5:1, fails at alpha 0.8;
+  reaching 4.5:1 on the bright scenes would need ~0.95 alpha which
+  the approved cap 0.8 forbids — reported, decision to client).
 - Frame loading is contiguous-front-first: 5 independent worker lanes
   each take the LOWEST frame index that is neither loaded nor in
   flight, so a hung/stalled request caps the loaded-set gap at

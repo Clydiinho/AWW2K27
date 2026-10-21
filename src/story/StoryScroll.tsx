@@ -133,6 +133,7 @@ export default function StoryScroll() {
               className="story-chapter"
               data-chapter={ch.id}
               data-active={activeId === ch.id ? "1" : "0"}
+              aria-labelledby={`chapter-${ch.id}-title`}
               style={{ height: `${ch.scrollVh}vh` } as CSSProperties}
             >
               {posterMode && (
@@ -152,27 +153,31 @@ export default function StoryScroll() {
                 color={["#d8b97a", "#f1ebe0", "#b08a5b"]}
               >
                 <div className="story-panel-tilt">
-                  <p className="story-panel-eyebrow">{data?.eyebrow}</p>
-                  <h2 className="story-panel-headline">{data?.headline}</h2>
-                  {c?.subline && <p className="story-panel-subline">{c.subline}</p>}
-                  {c?.lead && <p className="story-panel-lead">{c.lead}</p>}
-                  {paras.map((para, i) => (
-                    <p key={i} className="story-panel-body">{para}</p>
-                  ))}
-                  {c?.triplet && <p className="story-panel-triplet">{c.triplet}</p>}
-                  {c?.rooms?.map(room => (
-                    <div key={room.label} className="story-panel-room">
-                      <span className="story-panel-room-label">{room.label}</span>
-                      <p className="story-panel-room-text">{room.text}</p>
-                    </div>
-                  ))}
-                  {c?.closing && <p className="story-panel-closing">{c.closing}</p>}
+                  <header className="story-panel-head">
+                    <p className="story-panel-eyebrow">{data?.eyebrow}</p>
+                    <h2 id={`chapter-${ch.id}-title`} className="story-panel-headline">{data?.headline}</h2>
+                  </header>
+                  <div className="story-panel-glass">
+                    {c?.subline && <p className="story-panel-subline">{c.subline}</p>}
+                    {c?.lead && <p className="story-panel-lead">{c.lead}</p>}
+                    {paras.map((para, i) => (
+                      <p key={i} className="story-panel-body">{para}</p>
+                    ))}
+                    {c?.triplet && <p className="story-panel-triplet">{c.triplet}</p>}
+                    {c?.rooms?.map(room => (
+                      <div key={room.label} className="story-panel-room">
+                        <span className="story-panel-room-label">{room.label}</span>
+                        <p className="story-panel-room-text">{room.text}</p>
+                      </div>
+                    ))}
+                    {c?.closing && <p className="story-panel-closing">{c.closing}</p>}
+                    {data?.draft && review && <p className="story-panel-draft">DRAFT COPY</p>}
+                  </div>
                   {cta ? (
                     <CtaButton label={cta.label} href={cta.href} />
                   ) : next ? (
                     <NextLink label={next.label} href={next.href} />
                   ) : null}
-                  {data?.draft && review && <p className="story-panel-draft">DRAFT COPY</p>}
                 </div>
               </ShineBorder>
             </section>
