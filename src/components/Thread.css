@@ -43,21 +43,29 @@
   opacity: 0.18;
 }
 
-/* the drawn line: full height, gradient, scaled from the top by story progress */
+/* the drawn line: full height, gradient, scaled from the top by story progress.
+   A faint warm sheen rides the gradient for a little extra shine. */
 .thread-drawer {
-  background: linear-gradient(180deg, var(--color-bronze) 0%, var(--color-gold) 100%);
+  background: linear-gradient(
+    172deg,
+    var(--color-bronze) 0%,
+    var(--color-gold) 47%,
+    rgba(232, 205, 150, 1) 50%,
+    var(--color-gold) 54%,
+    var(--color-gold) 100%
+  );
   transform-origin: top;
   transform: scaleY(var(--story-p, 0));
   will-change: transform;
 }
 
-/* nodes: diamonds at each chapter's start position (percent top set once at
-   measure time by Thread.tsx) */
+/* nodes: diamonds at each chapter's start position (--node-top replaced by
+   Thread.tsx at measure time; the ACTIVE node's CSS state rule below moves it
+   to the rail centre == viewport middle, a playhead) */
 .thread-node {
   position: absolute;
   left: 0;
-  /* --node-top is replaced by an inline top at measure time */
-  top: 0;
+  top: var(--node-top, 0%);
   width: 0;
   height: 0;
 }
@@ -71,7 +79,7 @@
   border: 1px solid var(--color-bronze);
   transform: rotate(45deg);
   opacity: 0.55; /* upcoming: dim outline */
-  transition: opacity 0.4s ease, background-color 0.001s;
+  transition: opacity 0.4s ease, background-color 0.001s, transform 0.4s ease;
   background: transparent;
 }
 
@@ -85,6 +93,53 @@
   border: 1px solid var(--color-gold);
   border-radius: 50%;
   opacity: 0;
+}
+
+/* shine: warm halo behind the gem, visible only while its chapter is active */
+.thread-node-gem::before {
+  content: "";
+  position: absolute;
+  inset: -16px;
+  background: radial-gradient(
+    closest-side,
+    rgba(216, 185, 122, 0.7),
+    rgba(216, 185, 122, 0.28) 45%,
+    rgba(216, 185, 122, 0) 78%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* playhead: the ACTIVE chapter's marker floats at the rail centre — the rail
+   is symmetric (top/bottom 5.5rem), so 50% is the exact viewport middle */
+[data-active="02"] .thread-node[data-i="0"],
+[data-active="03"] .thread-node[data-i="1"],
+[data-active="04"] .thread-node[data-i="2"],
+[data-active="05"] .thread-node[data-i="3"] {
+  top: 50%;
+}
+
+/* shine: active gem grows a touch and carries a faceted sparkle face */
+[data-active="02"] .thread-node[data-i="0"] .thread-node-gem,
+[data-active="03"] .thread-node[data-i="1"] .thread-node-gem,
+[data-active="04"] .thread-node[data-i="2"] .thread-node-gem,
+[data-active="05"] .thread-node[data-i="3"] .thread-node-gem {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-diamond) 0%,
+    var(--color-gold) 55%,
+    var(--color-bronze) 100%
+  );
+  transform: rotate(45deg) scale(1.3);
+}
+
+/* shine: the active gem's halo is on */
+[data-active="02"] .thread-node[data-i="0"] .thread-node-gem::before,
+[data-active="03"] .thread-node[data-i="1"] .thread-node-gem::before,
+[data-active="04"] .thread-node[data-i="2"] .thread-node-gem::before,
+[data-active="05"] .thread-node[data-i="3"] .thread-node-gem::before {
+  opacity: 1;
 }
 
 /* chapter numbers: small tabular figures on a dark scrim. Shown left of the
@@ -152,13 +207,14 @@
   opacity: 0.8;
 }
 
-/* the current node's number rises to gold */
+/* the current node's number rises to gold with a soft warm glow */
 [data-active="02"] .thread-node[data-i="0"] .thread-num,
 [data-active="03"] .thread-node[data-i="1"] .thread-num,
 [data-active="04"] .thread-node[data-i="2"] .thread-num,
 [data-active="05"] .thread-node[data-i="3"] .thread-num {
   color: var(--color-gold);
   opacity: 1;
+  text-shadow: 0 0 10px rgba(216, 185, 122, 0.55);
 }
 
 /* poster mode (review-only): the runner is not running, so drive the drawn

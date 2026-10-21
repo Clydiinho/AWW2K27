@@ -48,7 +48,7 @@ export default function Thread({ parentRef }: ThreadProps) {
         if (!node || !ch) return;
         const anchor = Math.max(ch.top - vh, pin);
         const p = Math.max(0, Math.min(1, (anchor - storyStart) / (storyEnd - storyStart)));
-        node.style.top = `${(p * 100).toFixed(4)}%`;
+        node.style.setProperty("--node-top", `${(p * 100).toFixed(4)}%`);
       });
     };
 

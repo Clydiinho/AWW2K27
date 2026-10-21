@@ -221,11 +221,22 @@ never into the code.
   (never in the scroll path). Node states (upcoming outline / current filled
   gold + pulsing ring 2.4s / passed filled bronze) come purely from the
   section's data-active (changes only when the chapter changes); the current
-  node also lights its chapter number (tabular figures on a dark scrim,
+  node also lights its chapter   number (tabular figures on a dark scrim,
   muted -> gold, 4.5:1+ contrast). Numbers sit LEFT of the rail and only on
   >=861px (the free gutter between rail and cards is ~14px on phones, so the
   ~25px pill would collide with the card glass there — hidden <861px per the
-  decorative-layer fallback in the brief). Hidden on hero (opacity 0), pulse
+  decorative-layer fallback in the brief). Per user instruction the marker is
+  now a PLAYHEAD: the active chapter's diamond + ring + number jump to the
+  rail centre (CSS `top: 50%`; the rail is symmetric 5.5rem top/bottom, so the
+  centre == exact viewport middle, verified gemY=vh/2 at 1440x900 for all four
+  chapters), while passed/upcoming markers stay at their measured chapter-start
+  positions; node positions are written to a `--node-top` custom property so
+  the CSS state rule wins over the inline value. Shine pass (per user
+  instruction): halo radial-gradient ::before behind the active gem
+  (opacity-only transition), faceted diamond→gold→bronze gradient face + 1.3x
+  scale on the active gem (transform transition 0.4s), a soft text-shadow glow
+  on the active chapter number, and a champagne sheen band in the drawer
+  gradient. No box-shadow. Reduced motion keeps static states (halo on). Hidden on hero (opacity 0), pulse
   paused via visibilitychange; poster mode falls back to animation-timeline:
   scroll(root) behind @supports; reduced motion shows static states. Each
   card's eyebrow gained a short hairline that draws in on chapter activate.
