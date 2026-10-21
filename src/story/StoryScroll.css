@@ -55,9 +55,10 @@
    Content-driven sizing: one base font-size, everything inside in em/ch, no
    fixed heights, no clipping — card height is always the natural text height,
    width follows the text via fit-content. The eyebrow + headline + NEXT link
-   sit OUTSIDE the glass: the wrapper keeps the sizing rules and the entrance
-   animation, .story-panel-glass carries the glass look only. No scrims —
-   the exposed text sits directly on the video (user instruction). */
+   sit OUTSIDE the glass but INSIDE the shine-border outline: the wrapper
+   owns a 1.5em / 1.25em padding so every child clears the ring line
+   (user instruction), .story-panel-glass carries the glass look only.
+   No scrims — the exposed text sits directly on the video. */
 
 .story-panel {
   font-size: clamp(0.9375rem, 0.86rem + 0.35vw, 1.0625rem);
@@ -69,6 +70,7 @@
   min-inline-size: min(100% - 2rem, 17rem);
   margin-block: 1.5em;
   margin-inline: clamp(22px, 4vw, 64px);
+  padding: 1.25em 1.5em;
   color: var(--color-ivory);
   opacity: 0;
   transform: translateY(10px);
@@ -93,12 +95,13 @@
   margin: 0 0 1em;
 }
 
-/* spacing: header block -> glass ~0.9em, glass -> link ~1em; the head and
-   the link keep the old 1.5em inline inset so they align with the glass
-   text edge and contribute it to the wrapper's preferred width */
-.story-panel-head { margin: 0 0 0.9em; padding-inline: 1.5em; }
+/* spacing: header block -> glass ~0.9em, glass -> link ~1em; the inline
+   inset lives on the wrapper now, so head and link align with the glass
+   text edge and their max-content + the wrapper padding still produces the
+   same preferred width as the old padded panel */
+.story-panel-head { margin: 0 0 0.9em; }
 .story-panel-glass ~ .cta-button,
-.story-panel-glass ~ .next-link { margin-top: 1em; padding-inline: 1.5em; }
+.story-panel-glass ~ .next-link { margin-top: 1em; }
 
 /* short draft card 05 is visibly narrower; long cards stay at 36rem */
 .story-panel--pin {

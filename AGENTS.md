@@ -266,7 +266,13 @@ never into the code.
   daylight frames the ivory headline drops to ~1.6–1.8:1 and the
   gold labels to ~1:1, on dark/bootstrap-fallback frames both pass
   — kept as history. The `.shine-border` ring outlines the WRAPPER
-  (title + glass + link), pre-existing since a414061.)
+  (title + glass + link), pre-existing since a414061; per user
+  instruction the wrapper now carries `padding: 1.25em 1.5em` so all
+  contents (head, glass, link) sit INSIDE the ring with clearance
+  (measured widths unchanged — 576/480/346 columns — heights + the
+  new padding; the old 1.5em inline inset moved off the head/link
+  onto the wrapper, so head/link/glass-text alignment and the
+  title+3em preferred width are preserved).
 - Frame loading is contiguous-front-first: 5 independent worker lanes
   each take the LOWEST frame index that is neither loaded nor in
   flight, so a hung/stalled request caps the loaded-set gap at
