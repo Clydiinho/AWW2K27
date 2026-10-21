@@ -56,6 +56,11 @@ Sparkle tints live in `src/preloader/config.ts`.
   and suppresses completion, for checking hand position and reveal stage.
 - The "Replay preloader" button was removed with the Task 01 placeholder;
   `?pp` is the remaining review control.
+- `?story=poster` forces the poster fallback for the scroll story.
+- `?review=1` shows the "DRAFT COPY" tag on the draft card (card 05
+  only); nothing renders without the flag.
+- `?buttons=hover` forces every CtaButton into its hovered look so the
+  design can be checked on a touch device without hovering.
 
 ## 7. Accessibility
 
@@ -139,3 +144,54 @@ never into the code.
   missing. Verified live via CDP (auto-demo flow renders in brand gold).
   Photo recompressed to 896px (~57 KB); total first-load ~146.4 kB gz,
   JS ~78.7 kB gz.
+- Story scroll animation rebuilt on the user-supplied JPG sequence
+  (`public/scroll animation/`, ezgif 273 × 1920×1080 frames of the full
+  0–40 s timeline; re-encoded to desktop 960×540 / mobile 576×324 JPGs,
+  245 frames, 6.59 MB + 3.33 MB). Chapters 02 29–118, 03 119–184,
+  04 185–245, 05 246–273 (calibrated to the 4.0/17.3/27.0/36.0 s cuts);
+  frames 1–28 (watch beauty shot) reserved, not encoded. Frames are the
+  unconditional default: no auto poster fallback (reduced-motion still
+  scrubs — scroll-driven, nearest frame, no interpolation); posters only
+  via the review-only `?story=poster` and while a chapter decodes.
+  `public/scroll animation.webm` and the assets-source video backup were
+  deleted per user instruction, and "Africa Watch Week Site Remix/"
+  removed.
+- Card sizing is content-driven (no fixed heights, no vh heights, no
+  clipping/scrollbars): one base font on `.story-panel`
+  (`clamp(0.9375rem, 0.86rem + 0.35vw, 1.0625rem)`), everything inside
+  in em/ch (`padding 1.5em`, gaps 1em, radius 1.75em, headline
+  `clamp(1.9em, 1.5em + 0.8vw, 2.6em)`, eyebrow 0.75em), width follows
+  text (`inline-size: fit-content`, clamp to `min(100% - 2rem,
+  var(--panel-max))` with 36rem default, 30rem for card 05, 58ch
+  paragraph measure). Long-copy cards 02/03/04 sit in normal flow
+  (`.story-panel--flow`) so the visitor scrolls through the text over
+  the pinned canvas; only short card 05 stays sticky pinned.
+  Cards get a pointer-driven 3D hover tilt (rotateX/rotateY ≤ 4° + scale
+  1.045 through CSS vars on an inner `.story-panel-tilt` layer,
+  transform-only, reduced-motion/ coarse-pointer off).
+- CtaButton contract (`src/components/CtaButton.tsx` + `.css`): props
+  `label / href / variant ("primary"|"ghost") / disabled`; renders an
+  `<a>` (anchor scroll); the label shows WITHOUT the trailing " →" (the
+  arrow is an aria-hidden inline SVG pair; site.ts keeps the full
+  string). Hover/focus animations are transform/opacity only, inside
+  `@media (hover: hover) and (pointer: fine)` plus `:focus-visible`
+  (2px bronze outline offset 3px): scaleX fill sweep 450ms, two-copy
+  text roll 450ms +40ms stagger, arrow shot-through 450ms, one-skew
+  diamond glint 700ms, `:active` scale 0.98 (120ms), `will-change` only
+  while hovering. Reduced motion: instant filled state, no roll/glint.
+  Touch devices: press scale on `:active` and the glint plays once via
+  a per-button IntersectionObserver on first scroll-into-view.
+  `?buttons=hover` forces the hovered look (review-only).
+- Card 05 is DRAFT copy (built only from the client's own phrases,
+  `draft: true` in `src/content/site.ts`): rooms "01 / DISCOVER",
+  "02 / EXCHANGE", "03 / CONNECT", no button. DRAFT tag renders only
+  with `?review=1`. Open questions live in `docs/BRIEF.md` (real
+  Chapter 05 copy; final call to action; may the closing line appear
+  twice — it is currently on both card 03 and card 05).
+- Frame loading is contiguous-front-first: 5 independent worker lanes
+  each take the LOWEST frame index that is neither loaded nor in
+  flight, so a hung/stalled request caps the loaded-set gap at
+  lane-count frames (the 199→249 jump was unbounded lane skew); per
+  frame 3 retries with 15s AbortController timeout; nearest-loaded
+  frame fallback still bridges. Verified by request-order log (strict
+  front-first waves) and deep-zone screenshots playing.

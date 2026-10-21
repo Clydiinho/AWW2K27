@@ -73,19 +73,18 @@
   color: var(--color-gold);
 }
 
-/* Scroll badge mount: bottom centre, above the LiquidEther layer. Appears
-   with a short fade after the preloader completes (the hero mounts then). */
+/* Scroll badge mount: in the hero flow under the tagline, always in view
+   without scrolling, above the LiquidEther layer. Fades in after the
+   preloader completes. */
 .hero .scroll-badge {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  position: relative;
   z-index: 2;
+  margin-top: clamp(12px, 3vmin, 24px);
   animation: hero-badge-in 600ms ease both;
 }
 
-/* Hide instead of squeeze on short screens (incl. landscape phones). */
-@media (max-height: 639px) {
+/* Hide instead of squeeze only on genuinely tiny viewports (landscape phones). */
+@media (max-height: 519px) {
   .hero .scroll-badge {
     display: none;
   }

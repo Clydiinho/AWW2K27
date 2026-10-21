@@ -3,7 +3,7 @@
   display: inline-grid;
   place-items: center;
   aspect-ratio: 1;
-  width: clamp(88px, 24vw, 128px);
+  width: clamp(72px, 18vmin, 96px);
   color: var(--color-gold);
   text-decoration: none;
 }
@@ -98,9 +98,9 @@
   }
 }
 
-/* Reduced motion: static badge, arrow at normal size. */
+/* Reduced motion: static arrow at normal size (the gentle 14s ring
+   rotation still runs by client request). */
 @media (prefers-reduced-motion: reduce) {
-  .scroll-badge-ring,
   .scroll-badge-arrow-wrap {
     animation: none;
     will-change: auto;

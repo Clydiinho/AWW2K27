@@ -1,25 +1,26 @@
 {
-  "generated": "2026-10-20T10:42:08.875Z",
+  "generated": "2026-10-20T16:35:33.307Z",
   "source": {
-    "file": "scroll animation.webm",
-    "tStart": 4,
-    "tEnd": 40,
-    "fps": 8,
-    "note": "scene 1 (0-4s) reserved for the hero; not part of the scroll story"
+    "folder": "public/scroll animation",
+    "pattern": "ezgif-frame-001..273.jpg",
+    "width": 1920,
+    "height": 1080,
+    "frames": 273,
+    "note": "full 0-40s timeline encoded from frame 1 (watch beauty shot leads ch02); desktop native 1920x1080 quality per user instruction"
   },
   "tiers": {
     "desktop": {
-      "w": 1280,
-      "h": 720,
-      "fps": 8,
-      "ext": "avif",
+      "w": 1920,
+      "h": 1080,
+      "fps": 6.8,
+      "ext": "jpg",
       "fit": "cover"
     },
     "mobile": {
-      "w": 720,
-      "h": 405,
-      "fps": 8,
-      "ext": "avif",
+      "w": 960,
+      "h": 540,
+      "fps": 6.8,
+      "ext": "jpg",
       "fit": "contain"
     }
   },
@@ -32,50 +33,50 @@
       "id": "02",
       "title": "PLACEHOLDER — Inside the Watch",
       "scrollVh": 450,
-      "tStart": 4,
-      "tEnd": 17.3,
+      "tStart": 0,
+      "tEnd": 17.35,
       "firstFrame": 1,
-      "lastFrame": 107,
-      "frameCount": 107,
-      "poster": "poster-1280x720.avif",
-      "posterMobile": "poster-720x405.avif"
+      "lastFrame": 118,
+      "frameCount": 118,
+      "poster": "poster-1920x1080.jpg",
+      "posterMobile": "poster-960x540.jpg"
     },
     {
       "id": "03",
       "title": "PLACEHOLDER — The Event",
       "scrollVh": 350,
-      "tStart": 17.3,
-      "tEnd": 27,
-      "firstFrame": 108,
+      "tStart": 17.35,
+      "tEnd": 27.06,
+      "firstFrame": 119,
       "lastFrame": 184,
-      "frameCount": 77,
-      "poster": "poster-1280x720.avif",
-      "posterMobile": "poster-720x405.avif"
+      "frameCount": 66,
+      "poster": "poster-1920x1080.jpg",
+      "posterMobile": "poster-960x540.jpg"
     },
     {
       "id": "04",
       "title": "PLACEHOLDER — The World",
       "scrollVh": 330,
-      "tStart": 27,
-      "tEnd": 36,
+      "tStart": 27.06,
+      "tEnd": 36.03,
       "firstFrame": 185,
-      "lastFrame": 256,
-      "frameCount": 72,
-      "poster": "poster-1280x720.avif",
-      "posterMobile": "poster-720x405.avif",
-      "posterWarp": "poster-warp-1280x720.avif"
+      "lastFrame": 245,
+      "frameCount": 61,
+      "poster": "poster-1920x1080.jpg",
+      "posterMobile": "poster-960x540.jpg",
+      "posterWarp": "poster-warp-1920x1080.jpg"
     },
     {
       "id": "05",
       "title": "PLACEHOLDER — The Experience",
       "scrollVh": 240,
-      "tStart": 36,
-      "tEnd": 40,
-      "firstFrame": 257,
-      "lastFrame": 288,
-      "frameCount": 32,
-      "poster": "poster-1280x720.avif",
-      "posterMobile": "poster-720x405.avif"
+      "tStart": 36.03,
+      "tEnd": 40.15,
+      "firstFrame": 246,
+      "lastFrame": 273,
+      "frameCount": 28,
+      "poster": "poster-1920x1080.jpg",
+      "posterMobile": "poster-960x540.jpg"
     }
   ],
   "framesByChapter": {
@@ -186,9 +187,7 @@
       104,
       105,
       106,
-      107
-    ],
-    "03": [
+      107,
       108,
       109,
       110,
@@ -199,7 +198,9 @@
       115,
       116,
       117,
-      118,
+      118
+    ],
+    "03": [
       119,
       120,
       121,
@@ -328,7 +329,9 @@
       242,
       243,
       244,
-      245,
+      245
+    ],
+    "05": [
       246,
       247,
       248,
@@ -339,9 +342,7 @@
       253,
       254,
       255,
-      256
-    ],
-    "05": [
+      256,
       257,
       258,
       259,
@@ -358,29 +359,14 @@
       270,
       271,
       272,
-      273,
-      274,
-      275,
-      276,
-      277,
-      278,
-      279,
-      280,
-      281,
-      282,
-      283,
-      284,
-      285,
-      286,
-      287,
-      288
+      273
     ]
   },
   "totals": {
-    "desktop": 7639870,
-    "mobile": 4032077,
-    "desktopMB": 7.29,
-    "mobileMB": 3.85,
-    "frames": 288
+    "desktop": 14767453,
+    "mobile": 8509631,
+    "desktopMB": 14.08,
+    "mobileMB": 8.12,
+    "frames": 273
   }
 }

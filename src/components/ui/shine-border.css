@@ -1,0 +1,51 @@
+/* Shine border (vendored Magic UI effect): an animated radial sweep running
+   inside the border ring via mask-composite. Animation budget rule: only
+   background-position, inside a static element — GPU cheap.
+
+   Tailwind parity (the classes the original component used):
+     before:animate-shine → @keyframes shine below
+     before:![mask-composite:exclude] → mask-composite: exclude
+     before:![-webkit-mask-composite:xor] → -webkit-mask-composite: xor
+     before:[background-size:300%_300%] etc. — encoded here. */
+
+.shine-border {
+  position: relative;
+}
+
+.shine-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: var(--border-width);
+  border-radius: var(--border-radius);
+  background-image: var(--shine-gradient);
+  background-size: 300% 300%;
+  -webkit-mask: var(--shine-mask);
+  mask: var(--shine-mask);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  background-position: 0% 0%;
+  will-change: background-position;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shine-border::before {
+    animation: shine var(--duration) infinite linear;
+  }
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  to {
+    background-position: 0% 0%;
+  }
+}

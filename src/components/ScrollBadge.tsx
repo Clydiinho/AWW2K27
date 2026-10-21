@@ -14,7 +14,7 @@ const NBSP = "\u00A0"; // keeps the trailing gap un-collapsed by SVG whitespace 
 const DOTS = "\u2022\u2022";
 
 export interface ScrollBadgeProps {
-  href?: string; // TODO: "#chapter-02" may not exist yet; the native anchor falls back to nothing
+  href?: string; // anchor target lives in StoryScroll (<section id="chapter-02">)
 }
 
 export default function ScrollBadge({ href = "#chapter-02" }: ScrollBadgeProps) {
