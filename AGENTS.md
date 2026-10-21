@@ -243,8 +243,9 @@ never into the code.
   closing (+ `?review=1` draft tag) stay inside `.story-panel-glass`.
   The wrapper keeps ALL old sizing rules (fit-content, min/max, base
   font, margins, entrance transition); `.story-panel-glass` is
-  `inline-size: 100%` and carries the glass look (alpha 0.74 / 0.50 +
-  16px blur ≥861px). The old 1.5em inline inset now lives on
+  `inline-size: 100%` and carries the glass look (alpha 0.86 /
+  0.66 + 16px blur ≥861px — per user instruction the inner glass was
+  darkened from the original 0.74 / 0.50). The old 1.5em inline inset now lives on
   `.story-panel-head` and on the `~ .cta-button / ~ .next-link`
   siblings so their glyphs align with the glass text edge AND their
   max-content (title + 3em) still drives the wrapper's preferred width

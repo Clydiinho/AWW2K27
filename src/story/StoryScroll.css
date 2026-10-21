@@ -5,7 +5,7 @@
 :root {
   --story-band: #050505;
   --story-band-05: #0d1518;
-  --panel-alpha: 0.74;
+  --panel-alpha: 0.86;
   --panel-blur: none;
 }
 
@@ -51,7 +51,8 @@
   align-items: start;
 }
 
-/* Glass panels (approved: alpha 0.74 phone / 0.50 + blur 16px desktop).
+/* Glass panels (approved: alpha 0.86 phone / 0.66 + blur 16px desktop;
+   darkened from the original 0.74 / 0.50 per user instruction).
    Content-driven sizing: one base font-size, everything inside in em/ch, no
    fixed heights, no clipping — card height is always the natural text height,
    width follows the text via fit-content. The eyebrow + headline + NEXT link
@@ -264,7 +265,7 @@
 }
 
 @media (min-width: 861px) {
-  :root { --panel-alpha: 0.5; --panel-blur: blur(16px); }
+  :root { --panel-alpha: 0.66; --panel-blur: blur(16px); }
   .story-panel,
   .story-panel-glass { backdrop-filter: var(--panel-blur); -webkit-backdrop-filter: var(--panel-blur); }
 }
