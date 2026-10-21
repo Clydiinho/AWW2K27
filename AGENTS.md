@@ -60,7 +60,10 @@ Sparkle tints live in `src/preloader/config.ts`.
 - `?review=1` shows the "DRAFT COPY" tag on the draft card (card 05
   only); nothing renders without the flag.
 - `?buttons=hover` forces every CtaButton into its hovered look so the
-  design can be checked on a touch device without hovering.
+  design can be checked on a touch device without hovering. CtaButtons
+  only render while `COPY_VERSION` is `"full"`.
+- `?links=hover` forces every NextLink into its hovered look (same
+  purpose as above, for the short-copy cards).
 
 ## 7. Accessibility
 
@@ -182,6 +185,51 @@ never into the code.
   Touch devices: press scale on `:active` and the glint plays once via
   a per-button IntersectionObserver on first scroll-into-view.
   `?buttons=hover` forces the hovered look (review-only).
+- Card 04: NEXT links (option B) replaced the big CTA buttons on cards
+- Short copy is active (`COPY_VERSION = "short"` in `src/content/site.ts`)
+  pending client approval; the full client copy stays in the file as
+  `copy.full` per chapter and switching `COPY_VERSION` to `"full"` restores
+  both the original text and the original CTA labels (CtaButton is kept only
+  for that switch — the hero never used it). Marked in `docs/BRIEF.md`.
+- NEXT links (`src/components/NextLink.tsx` + `.css`, cards 02–04): small
+  uppercase gold label + inline SVG arrow, 44px+ tap row, disabled variant
+  (aria-disabled, tabindex -1, muted). A 1px bronze line at 35% opacity is a
+  ::after (scale 0 -> 1 draw-in 700ms + 300ms delay via the `scale`
+  independent property; hover extends on `transform` scaleX 1.2 so both
+  compose — no width animation). Hover/focus: line brightens with a
+  bronze-to-gold gradient, extends ~2.5em right, diamond (~5px) rides the
+  end, arrow +0.6em, label +0.25em; all transform/opacity, will-change only
+  while hovering. Touch: :active extends/nudges for 160ms. Reduced motion:
+  line drawn, no slides, hover brightens instantly. `?links=hover` forces
+  the hovered look (review-only).
+- Slow NEXT scroll (`src/story/next-scroll.ts`): clicking a NextLink
+  preventDefaults and rAF-scrolls with easeInOutCubic over
+  clamp(distance/1.2ms-per-px, 700ms, 2000ms) so the pinned canvas plays
+  through; wheel/touchstart/touchmove/keydown/mousedown (passive) cancel
+  immediately; reduced motion and missed targets fall back to the plain
+  anchor jump. On finish: history.replaceState to the hash + focus to the
+  target section (tabindex -1, focus({ preventScroll })).
+- Thread rail (`src/components/Thread.tsx` + `Thread.css`): decorative fixed
+  1px line at the left edge (`left: calc(0.5rem + safe-area-inset)`;
+  `clamp(1rem, 3vw, 2.5rem)` from 900px; top/bottom 5.5rem clears the header)
+  above the canvas and below the cards. Track at 18% opacity bronze-dim; the
+  drawn line is a bronze-to-gold gradient scaleY(var(--story-p)) — the var is
+  written by the EXISTING scrub loop (one additive block in
+  story-runner.ts computeActive; start = chapter 02 anchor, end = chapter 05
+  end). Four nodes (7px diamonds) sit at each chapter's start as a % of story
+  scroll, measured ONCE via ResizeObserver + fonts.ready in Thread.tsx
+  (never in the scroll path). Node states (upcoming outline / current filled
+  gold + pulsing ring 2.4s / passed filled bronze) come purely from the
+  section's data-active (changes only when the chapter changes); the current
+  node also lights its chapter number (tabular figures on a dark scrim,
+  muted -> gold, 4.5:1+ contrast). Numbers sit LEFT of the rail and only on
+  >=861px (the free gutter between rail and cards is ~14px on phones, so the
+  ~25px pill would collide with the card glass there — hidden <861px per the
+  decorative-layer fallback in the brief). Hidden on hero (opacity 0), pulse
+  paused via visibilitychange; poster mode falls back to animation-timeline:
+  scroll(root) behind @supports; reduced motion shows static states. Each
+  card's eyebrow gained a short hairline that draws in on chapter activate.
+  Colours added to tokens.css: --color-bronze-dim, --color-text-muted (#9b8a6f).
 - Card 05 is DRAFT copy (built only from the client's own phrases,
   `draft: true` in `src/content/site.ts`): rooms "01 / DISCOVER",
   "02 / EXCHANGE", "03 / CONNECT", no button. DRAFT tag renders only

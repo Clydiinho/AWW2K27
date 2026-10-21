@@ -1,0 +1,188 @@
+/* Thread — decorative fixed rail along the left edge: track, drawn line driven
+   by --story-p (written by the existing story scrub loop), four chapter nodes.
+   Geometry/measure never runs in the scroll path; animation is transform +
+   opacity only. */
+
+.thread {
+  position: fixed;
+  left: calc(0.5rem + env(safe-area-inset-left, 0px));
+  top: 5.5rem;
+  bottom: 5.5rem;
+  width: 1px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+/* hidden while the hero is on screen (no active chapter yet) */
+.story[data-active=""] .thread,
+.story--pending .thread {
+  opacity: 0;
+}
+
+/* from 900px wide the rail moves into the desktop gutter */
+@media (min-width: 900px) {
+  .thread {
+    left: clamp(1rem, 3vw, 2.5rem);
+  }
+}
+
+/* 1px track at ~18% opacity */
+.thread-rail,
+.thread-drawer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.thread-rail {
+  background: var(--color-bronze-dim);
+  opacity: 0.18;
+}
+
+/* the drawn line: full height, gradient, scaled from the top by story progress */
+.thread-drawer {
+  background: linear-gradient(180deg, var(--color-bronze) 0%, var(--color-gold) 100%);
+  transform-origin: top;
+  transform: scaleY(var(--story-p, 0));
+  will-change: transform;
+}
+
+/* nodes: diamonds at each chapter's start position (percent top set once at
+   measure time by Thread.tsx) */
+.thread-node {
+  position: absolute;
+  left: 0;
+  /* --node-top is replaced by an inline top at measure time */
+  top: 0;
+  width: 0;
+  height: 0;
+}
+
+.thread-node-gem {
+  position: absolute;
+  left: -3.5px;
+  top: -3.5px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--color-bronze);
+  transform: rotate(45deg);
+  opacity: 0.55; /* upcoming: dim outline */
+  transition: opacity 0.4s ease, background-color 0.001s;
+  background: transparent;
+}
+
+/* current node's soft ring (pulses by transform + opacity only) */
+.thread-node-ring {
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--color-gold);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* chapter numbers: small tabular figures on a dark scrim. Shown left of the
+   rail on hover-capable/desktop widths ONLY (>=861px): the free gutter left of
+   the cards is ~24px at 1440+ but only ~14px on phones, so on narrow viewports
+   the label would collide with the card glass — hidden there (decorative). */
+.thread-num {
+  position: absolute;
+  right: 1.4em;
+  top: 50%;
+  transform: translateY(-50%);
+  font: 600 0.7rem/1 var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  background: rgb(5 5 5 / 0.72);
+  padding: 0.25em 0.5em;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .thread-num {
+    display: none;
+  }
+}
+
+/* state machine comes from the section's data-active (changes only when the
+   active chapter index changes) */
+[data-active="02"] .thread-node[data-i="0"] .thread-node-gem,
+[data-active="03"] .thread-node[data-i="1"] .thread-node-gem,
+[data-active="04"] .thread-node[data-i="2"] .thread-node-gem,
+[data-active="05"] .thread-node[data-i="3"] .thread-node-gem {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  opacity: 1;
+}
+
+[data-active="02"] .thread-node[data-i="0"] .thread-node-ring,
+[data-active="03"] .thread-node[data-i="1"] .thread-node-ring,
+[data-active="04"] .thread-node[data-i="2"] .thread-node-ring,
+[data-active="05"] .thread-node[data-i="3"] .thread-node-ring {
+  opacity: 0.6;
+  animation: thread-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes thread-pulse {
+  0%, 100% { transform: scale(0.8); opacity: 0.65; }
+  50% { transform: scale(1.5); opacity: 0.2; }
+}
+
+.thread--paused .thread-node-ring {
+  animation-play-state: paused;
+}
+
+/* passed nodes: filled bronze */
+[data-active="03"] .thread-node[data-i="0"] .thread-node-gem,
+[data-active="04"] .thread-node[data-i="0"] .thread-node-gem,
+[data-active="05"] .thread-node[data-i="0"] .thread-node-gem,
+[data-active="04"] .thread-node[data-i="1"] .thread-node-gem,
+[data-active="05"] .thread-node[data-i="1"] .thread-node-gem,
+[data-active="05"] .thread-node[data-i="2"] .thread-node-gem {
+  background: var(--color-bronze);
+  border-color: var(--color-bronze);
+  opacity: 0.8;
+}
+
+/* the current node's number rises to gold */
+[data-active="02"] .thread-node[data-i="0"] .thread-num,
+[data-active="03"] .thread-node[data-i="1"] .thread-num,
+[data-active="04"] .thread-node[data-i="2"] .thread-num,
+[data-active="05"] .thread-node[data-i="3"] .thread-num {
+  color: var(--color-gold);
+  opacity: 1;
+}
+
+/* poster mode (review-only): the runner is not running, so drive the drawn
+   line from page scroll via CSS scroll-driven animation behind @supports */
+@supports (animation-timeline: scroll()) {
+  @keyframes thread-poster {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+  .story--poster .thread-drawer {
+    transform: scaleY(0);
+    animation: thread-poster linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+/* reduced motion: states show statically, no draw, no pulse; the line still
+   follows scroll position (no animation of its own) */
+@media (prefers-reduced-motion: reduce) {
+  .thread { transition: none; }
+  .thread-node-gem { transition: none; }
+  .thread-node-ring { animation: none; opacity: 0.45; }
+  [data-active="02"] .thread-node[data-i="0"] .thread-node-ring { opacity: 0.45; }
+  [data-active="03"] .thread-node[data-i="1"] .thread-node-ring { opacity: 0.45; }
+  [data-active="04"] .thread-node[data-i="2"] .thread-node-ring { opacity: 0.45; }
+  [data-active="05"] .thread-node[data-i="3"] .thread-node-ring { opacity: 0.45; }
+}

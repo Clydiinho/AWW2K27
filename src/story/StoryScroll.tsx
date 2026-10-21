@@ -1,14 +1,17 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { site, type StoryChapterCopy } from "../content/site";
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
+import { site, COPY_VERSION, type StoryChapter, type StoryChapterCopy } from "../content/site";
 import { ShineBorder } from "../components/ui/shine-border";
+import { NextLink } from "../components/NextLink";
 import { CtaButton } from "../components/CtaButton";
+import Thread from "../components/Thread";
 import { useStoryEngine, type EngineState } from "./use-frames";
 import { createRunner } from "./story-runner";
 import "./StoryScroll.css";
 
 // Review-only controls (remove before launch, like ?pp / ?story):
-//   ?review=1      shows the "DRAFT COPY" tag on draft cards (card 05)
-//   ?buttons=hover forces CtaButtons into their hovered look
+//   ?review=1       shows the "DRAFT COPY" tag on draft cards (card 05)
+//   ?buttons=hover  forces CtaButtons (full-copy cards) into their hovered look
+//   ?links=hover    forces NextLinks (short-copy cards) into their hovered look
 function readReviewFlag(): boolean {
   if (typeof window === "undefined" || typeof URLSearchParams === "undefined") return false;
   return new URLSearchParams(window.location.search).get("review") === "1";
@@ -33,6 +36,9 @@ export default function StoryScroll() {
     const onFinale = (q: number) => {
       section.style.setProperty("--finale-p", `${q}`);
     };
+    const onStory = (p: number) => {
+      section.style.setProperty("--story-p", p.toFixed(4));
+    };
     if (state.mode === "poster") {
       setClass(null);
       return;
@@ -45,6 +51,7 @@ export default function StoryScroll() {
       state: () => stateRef.current,
       onActive: setClass,
       onFinale,
+      onStory,
       ensure: id => engineRef.current?.ensure(id),
     });
     runner.start();
@@ -108,9 +115,16 @@ export default function StoryScroll() {
           <canvas ref={canvasRef} className="story-canvas" />
         </div>
       )}
+      <Thread parentRef={sectionRef as RefObject<HTMLElement | null>} />
       <div className="story-track">
         {chapters.map((ch) => {
-          const c = copy.chapters.find(x => x.id === ch.id);
+          // verbatim copy per chapter, versioned (full = approved client copy,
+          // short = interim copy awaiting client approval); see site.ts
+          const data = copy.chapters.find(x => x.id === ch.id);
+          const c = data?.copy[COPY_VERSION] as StoryChapterCopy | undefined;
+          const paras: string[] = Array.isArray(c?.body) ? c.body : c?.body ? [c.body] : [];
+          const cta = c && "cta" in c ? c.cta : undefined;
+          const next = c && "next" in c ? c.next : undefined;
           const bandNow = ch.id === "05" ? "var(--story-band-05)" : band;
           return (
             <section
@@ -131,18 +145,18 @@ export default function StoryScroll() {
                 </figure>
               )}
               <ShineBorder
-                className={panelClassName(ch.id, chapters, c)}
+                className={panelClassName(ch.id, chapters, data)}
                 borderRadius={28}
                 borderWidth={1}
                 duration={14}
                 color={["#d8b97a", "#f1ebe0", "#b08a5b"]}
               >
                 <div className="story-panel-tilt">
-                  <p className="story-panel-eyebrow">{c?.eyebrow}</p>
-                  <h2 className="story-panel-headline">{c?.headline}</h2>
+                  <p className="story-panel-eyebrow">{data?.eyebrow}</p>
+                  <h2 className="story-panel-headline">{data?.headline}</h2>
                   {c?.subline && <p className="story-panel-subline">{c.subline}</p>}
                   {c?.lead && <p className="story-panel-lead">{c.lead}</p>}
-                  {c?.body?.map((para, i) => (
+                  {paras.map((para, i) => (
                     <p key={i} className="story-panel-body">{para}</p>
                   ))}
                   {c?.triplet && <p className="story-panel-triplet">{c.triplet}</p>}
@@ -152,9 +166,13 @@ export default function StoryScroll() {
                       <p className="story-panel-room-text">{room.text}</p>
                     </div>
                   ))}
-                  <p className="story-panel-closing">{c?.closing}</p>
-                  {c?.cta && <CtaButton label={c.cta.label} href={c.cta.href} />}
-                  {c?.draft && review && <p className="story-panel-draft">DRAFT COPY</p>}
+                  {c?.closing && <p className="story-panel-closing">{c.closing}</p>}
+                  {cta ? (
+                    <CtaButton label={cta.label} href={cta.href} />
+                  ) : next ? (
+                    <NextLink label={next.label} href={next.href} />
+                  ) : null}
+                  {data?.draft && review && <p className="story-panel-draft">DRAFT COPY</p>}
                 </div>
               </ShineBorder>
             </section>
@@ -190,13 +208,13 @@ export default function StoryScroll() {
 // through over the pinned canvas; only the short draft card 05 stays pinned.
 const FLOW_CHAPTERS = new Set(["02", "03", "04"]);
 
-function panelClassName(chId: string, chapters: { id: string }[], c?: StoryChapterCopy): string {
+function panelClassName(chId: string, chapters: { id: string }[], data?: StoryChapter): string {
   const classes = ["story-panel"];
   if (chId === chapters[0]?.id) classes.push("story-panel--enter");
   classes.push(`story-panel--${panelSide(chId)}`);
   if (FLOW_CHAPTERS.has(chId)) classes.push("story-panel--flow");
   else classes.push("story-panel--pin");
-  if (c?.draft) classes.push("story-panel--draft");
+  if (data?.draft) classes.push("story-panel--draft");
   return classes.join(" ");
 }
 

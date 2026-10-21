@@ -6,6 +6,8 @@
   --color-ivory: #f1ebe0;
   --color-diamond: #eaf3ff;
   --color-line: rgba(176, 138, 91, 0.35);
+  --color-bronze-dim: rgba(176, 138, 91, 0.38);
+  --color-text-muted: #9b8a6f;
   /* Brand voice: self-hosted Griffiths for display + numerals; self-hosted Outfit for micro text. */
   --font-display: "Griffiths", Georgia, "Times New Roman", serif;
   --font-sans: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;

@@ -6,12 +6,13 @@ export interface RunnerOptions {
   state: () => { mode: string; manifest: StoryManifest | null; chapters: Record<string, ChapterRuntime> };
   onActive: (chId: string | null) => void;
   onFinale: (progress: number) => void;
+  onStory?: (progress: number) => void;
   ensure?: (chId: string) => void;
 }
 
 // Scroll-driven frame player. Maps scroll position to the NEAREST frame of the
 // active chapter (no interpolation). Canvas draws only; CSS handles everything else.
-export function createRunner({ section, canvas, state, onActive, onFinale, ensure }: RunnerOptions) {
+export function createRunner({ section, canvas, state, onActive, onFinale, onStory, ensure }: RunnerOptions) {
   const ctx = canvas.getContext("2d", { alpha: false });
   if (!ctx) return { start: () => {}, stop: () => {} };
   const g2d = ctx; // narrowed context for TS
@@ -116,6 +117,15 @@ export function createRunner({ section, canvas, state, onActive, onFinale, ensur
       const rect = fin.getBoundingClientRect();
       const q = Math.max(0, Math.min(1, (vh - rect.top) / Math.max(1, rect.height)));
       onFinale(q);
+    }
+    // thread: story-level progress (start of chapter 02 -> end of chapter 05)
+    // written straight to the CSS var the decorative Thread layer reads
+    const s02 = chapterEl(Object.keys(s.chapters)[0]);
+    const s05 = chapterEl(Object.keys(s.chapters).slice(-1)[0]);
+    if (s02 && s05) {
+      const start0 = Math.max(s02.getBoundingClientRect().top + y - vh, pin);
+      const end0 = s05.getBoundingClientRect().top + y + s05.offsetHeight - vh;
+      onStory?.(Math.max(0, Math.min(1, (y - start0) / Math.max(1, end0 - start0))));
     }
   }
 
