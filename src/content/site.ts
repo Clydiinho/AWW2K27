@@ -19,7 +19,20 @@ export interface SiteContent {
     chapters: StoryChapter[];
     finale: { cta: string; ctaAria: string };
   };
+  keyNumbers: KeyNumbers;
 }
+
+// Key numbers after the story: figures supplied by the client but NOT yet
+// confirmed (see STATS_CONFIRMED). Render verbatim; do not add labels,
+// descriptions or units.
+export interface KeyNumbers {
+  eyebrow: string;
+  stats: { display: string; label: string }[];
+}
+
+// Unconfirmed figures: the section renders a review-only "DRAFT FIGURES" tag
+// and must not launch until the client confirms the numbers and wording.
+export const STATS_CONFIRMED = false;
 
 export interface StoryCtaCopy {
   label: string; // includes the trailing " →"; CtaButton renders the arrow itself
@@ -190,5 +203,14 @@ export const site: SiteContent = {
       cta: "PLACEHOLDER — Register your interest", // PLACEHOLDER — awaiting client copy
       ctaAria: "Register your interest", // PLACEHOLDER
     },
+  },
+  keyNumbers: {
+    eyebrow: "KEY NUMBERS",
+    stats: [
+      { display: "40,000", label: "VISITORS EXPECTED" },
+      { display: "6 Days", label: "OF IMMERSIVE WATCH EXPERIENCES" },
+      { display: "45", label: "PARTICIPATING BRANDS" },
+      { display: "200+", label: "NOVELTIES & RARE EXHIBIT TIMEPIECES" },
+    ],
   },
 };

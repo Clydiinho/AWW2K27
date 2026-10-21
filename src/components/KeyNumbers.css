@@ -1,0 +1,295 @@
+/* Key numbers — after the scroll story. Solid page background, z-index above
+   the fixed canvas/cards/Thread so nothing shows through; a static fade at the
+   top edge blends the last video frame into the section. Every size in em or
+   clamp so the block scales as one unit; no fixed heights; transform +
+   opacity-only animation. */
+
+.key-numbers {
+  position: relative;
+  z-index: 2; /* above the story (z 0/1 incl. the fixed Thread) */
+  background: var(--color-bg);
+}
+
+/* static fade bridging the last video frame into the section */
+.key-numbers::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * clamp(4rem, 14svh, 9rem));
+  height: clamp(4rem, 14svh, 9rem);
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+}
+
+.key-inner {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  padding-block: clamp(4rem, 12svh, 8rem);
+}
+
+/* eyebrow: the section's h2, small spaced caps with the short bronze
+   hairline in front, as on the cards */
+.key-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin: 0 0 2.5em;
+  font: 500 0.75rem/1.4 var(--font-sans);
+  letter-spacing: 0.18em;
+  color: var(--color-bronze);
+}
+
+.key-eyebrow::before {
+  content: "";
+  inline-size: 2.5em;
+  block-size: 1px;
+  background: var(--color-bronze);
+  opacity: 0.5;
+}
+
+.key-draft {
+  margin: -1.5em 0 2.5em;
+  font: 500 0.6875rem/1 var(--font-sans);
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+}
+
+/* ---- hero stat ------------------------------------------------------ */
+
+.key-hero {
+  display: grid;
+  grid-template-areas:
+    "stat"
+    "rule"
+    "photo";
+  grid-template-columns: 1fr;
+}
+
+.key-hero-stat {
+  grid-area: stat;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+/* hero number */
+.stat-num--hero {
+  font-family: var(--font-stat);
+  font-size: clamp(4.25rem, 22vw, 10rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* one-cell grid: the invisible final copy reserves the width, the animated
+   copy overlays it so counting never shifts layout */
+.stat-num {
+  position: relative;
+  display: inline-grid;
+}
+
+.stat-num-final,
+.stat-num-anim,
+.stat-num > .visually-hidden {
+  grid-area: 1 / 1;
+}
+
+.stat-num-final {
+  visibility: hidden;
+  white-space: pre;
+}
+
+.stat-num-anim {
+  white-space: pre;
+}
+
+/* the real value for assistive tech (clipped, out of flow) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* labels: uppercase as supplied, gold, spaced caps */
+.stat-label {
+  display: block;
+  max-inline-size: 24ch;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  color: var(--color-gold);
+}
+
+/* hairline under the hero stat: draws in once (transform only) */
+.key-hero-rule {
+  grid-area: rule;
+  height: 1px;
+  margin-top: 1.5em;
+  background: var(--color-line);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 150ms;
+}
+
+.stat-in.key-hero-rule,
+.key-static .key-hero-rule {
+  transform: scaleX(1);
+}
+
+/* the stock photo (phone placement: under the hero number/label/rule) */
+.stat-photo {
+  grid-area: photo;
+  margin: 1.25em 0 0;
+  position: relative;
+  width: 100%;
+  max-height: 13rem;
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  overflow: hidden; /* clips only the photo, never a number */
+}
+
+.stat-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85); /* static, never animated */
+}
+
+.stat-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.28);
+  pointer-events: none;
+}
+
+/* ---- row of three ---------------------------------------------------- */
+
+.key-row {
+  margin-top: clamp(3rem, 8vw, 5rem);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.key-cell {
+  padding-block: 1.75em;
+}
+
+.key-cell + .key-cell {
+  border-top: 1px solid var(--color-line);
+}
+
+.stat-num--cell {
+  font-family: var(--font-stat);
+  font-size: clamp(2.5rem, 7vw, 3.75rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.key-cell .stat-label {
+  margin-top: 0.9em;
+}
+
+/* ---- entrance (observer adds .stat-in; stagger via inline delay) ----- */
+
+.key-numbers [data-anim] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 600ms ease-out,
+    transform 600ms ease-out;
+}
+
+.key-numbers [data-anim].stat-in {
+  opacity: 1;
+  transform: none;
+}
+
+.key-numbers .stat-photo[data-anim] {
+  transition: opacity 600ms ease-out; /* fade only */
+}
+
+/* ---- desktop --------------------------------------------------------- */
+
+@media (min-width: 640px) {
+  .key-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .key-cell {
+    border-top: 1px solid var(--color-line);
+    padding-block: 1.5em 0;
+  }
+}
+
+@media (min-width: 900px) {
+  /* number + label on one row, photo at the far right of the row */
+  .key-hero {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    grid-template-areas:
+      "stat photo"
+      "rule photo";
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .key-hero-stat {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.35em;
+  }
+
+  .key-hero-rule {
+    margin-top: 0.9em;
+  }
+
+  .stat-photo {
+    margin: 0;
+    width: clamp(16rem, 26vw, 24rem);
+    max-height: none;
+  }
+}
+
+/* ---- static variants -------------------------------------------------- */
+
+/* reduced motion / data-saver / ?stats=in: final state immediately, a simple
+   200ms opacity fade at most */
+.key-numbers.key-static [data-anim] {
+  opacity: 1;
+  transform: none;
+  transition: opacity 200ms ease-out;
+}
+
+.key-static .key-hero-rule {
+  transform: scaleX(1);
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .key-hero-rule {
+    transform: scaleX(1);
+    transition: none;
+  }
+}

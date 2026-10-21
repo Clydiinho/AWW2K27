@@ -8,7 +8,12 @@
   --color-line: rgba(176, 138, 91, 0.35);
   --color-bronze-dim: rgba(176, 138, 91, 0.38);
   --color-text-muted: #9b8a6f;
+  /* Aliases so copy-level tokens resolve without hard-coding in components. */
+  --color-text: var(--color-ivory);
   /* Brand voice: self-hosted Griffiths for display + numerals; self-hosted Outfit for micro text. */
   --font-display: "Griffiths", Georgia, "Times New Roman", serif;
   --font-sans: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: var(--font-sans);
+  /* Stat numerals: one token so a later design prompt can swap the face. */
+  --font-stat: var(--font-body);
 }

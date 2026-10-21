@@ -29,3 +29,17 @@ a client answer.
    stays DRAFT in both versions).
    The short version also retires the "closing line appears twice" question for
    card 03 (its short copy has no closing line; card 05 keeps it).
+
+## Key numbers (draft figures)
+
+5. **Are the figures confirmed, targets or projections, and what is their
+   source?** The client supplied the numbers but has NOT confirmed them
+   (`STATS_CONFIRMED = false` in `src/content/site.ts`). The section shows a
+   review-only "DRAFT FIGURES" tag with `?review=1`.
+6. **May "45 participating brands" be shown without naming brands?** If not,
+   the section needs a supporting brand list or different wording.
+7. **How do 40,000 visitors over 6 days fit with "an intimate, carefully
+   curated gathering" for "a select circle of organisations"?** Is there a
+   public programme plus an invite-only evening?
+8. **What are the dates of the 6 days?** The section shows no dates, but the
+   copy says "6 Days".

@@ -2,6 +2,7 @@ import { Suspense, lazy, useCallback, useState } from "react";
 import Preloader from "./preloader/Preloader";
 import SiteHeader from "./components/SiteHeader";
 import HeroSection from "./components/HeroSection";
+import KeyNumbers from "./components/KeyNumbers";
 
 // Review-only control (REMOVE BEFORE LAUNCH):
 //   ?pp=0..1 freezes the preloader at that progress (e.g. ?pp=0.5) and
@@ -24,6 +25,7 @@ export default function App() {
         <Suspense fallback={null}>
           <StoryScroll />
         </Suspense>
+        <KeyNumbers />
       </main>
     </>
   );

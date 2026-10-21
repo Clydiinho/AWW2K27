@@ -64,6 +64,9 @@ Sparkle tints live in `src/preloader/config.ts`.
   only render while `COPY_VERSION` is `"full"`.
 - `?links=hover` forces every NextLink into its hovered look (same
   purpose as above, for the short-copy cards).
+- `?stats=in` shows the key-numbers section in its final state
+  (no count-up, entrance disabled) — review control only (TEMPORARY,
+  remove before launch).
 
 ## 7. Accessibility
 
@@ -296,3 +299,38 @@ never into the code.
   frame 3 retries with 15s AbortController timeout; nearest-loaded
   frame fallback still bridges. Verified by request-order log (strict
   front-first waves) and deep-zone screenshots playing.
+- Key-numbers section (draft figures — LAUNCH BLOCKER: figures are
+  UNCONFIRMED; do not launch until the client confirms them and
+  `STATS_CONFIRMED = true` in `src/content/site.ts`): data in
+  `src/content/site.ts` (`keyNumbers`, `KeyNumbers` interface,
+  `STATS_CONFIRMED = false`, the "DRAFT FIGURES" tag renders only with
+  `?review=1`); component `src/components/KeyNumbers.tsx` + `.css`,
+  mounted in `App.tsx` after the story `<Suspense>`. Layout: solid
+  `--color-bg` section (z 2) with a `::before` fade `clamp(4rem,14svh,
+  9rem)`; hero stat `clamp(4.25rem,22vw,10rem)` + label + hairline
+  draw + photo column at >=900px; row of three >=640px (stacked below).
+  Count-up: one shared rAF loop (1400ms easeOutCubic), starts via ONE
+  IntersectionObserver (threshold 0.3) on the first element entering
+  view (the counter used to start only if the FIRST entry was a
+  number — fixed), stagger 90ms per element batch; a 3s failsafe marks
+  visibility with final values but leaves the observer alive so the
+  count still plays when a visitor arrives later; each number renders
+  three copies (hidden in-flow final string reserves width so nothing
+  shifts while counting, aria-hidden overlay carries the animated
+  count, visually-hidden copy for assistive tech). Static path
+  (`prefers-reduced-motion` / `navigator.connection.saveData` /
+  `?stats=in`) adds `.key-static`: no count-up, no entrance, final
+  values. New tokens aliases in `tokens.css`:
+  `--color-text`/`--font-body`/`--font-stat` (the brief referenced
+  names that did not exist).
+- Stock photo for the key-numbers section: user-supplied
+  `public/closeup watch.webp` moved to
+  `assets-source/stats-original.webp` (git-ignored; 800x533 —
+  photo-1200 outputs are upscales, replace with a larger original
+  before launch if possible). Sharp pipeline optimised it to
+  `public/assets/stats-v1/photo-{480,800,1200}.{avif,webp}`
+  (largest avif 52.5 KB, <= STEP budgets; webp ratios 1.31-1.40).
+  LAUNCH BLOCKER: licence UNKNOWN — the source filename suggests a
+  watermarked stock preview; see `assets-source/CREDITS.md` (checks
+  dated 2026-10-21). `vercel.json` sets 1-year immutable cache for
+  `/assets/stats-v1/*`.
