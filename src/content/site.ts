@@ -17,7 +17,6 @@ export interface SiteContent {
   scrollBadge: { label: string; ariaLabel: string };
   story: {
     chapters: StoryChapter[];
-    finale: { cta: string; ctaAria: string };
   };
   keyNumbers: KeyNumbers;
 }
@@ -199,10 +198,6 @@ export const site: SiteContent = {
   },
   story: {
     chapters: storyChapters,
-    finale: {
-      cta: "PLACEHOLDER — Register your interest", // PLACEHOLDER — awaiting client copy
-      ctaAria: "Register your interest", // PLACEHOLDER
-    },
   },
   keyNumbers: {
     eyebrow: "KEY NUMBERS",

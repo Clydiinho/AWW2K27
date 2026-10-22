@@ -334,3 +334,26 @@ never into the code.
   watermarked stock preview; see `assets-source/CREDITS.md` (checks
   dated 2026-10-21). `vercel.json` sets 1-year immutable cache for
   `/assets/stats-v1/*`.
+- Hero reveal image (LAUNCH BLOCKER): `assets-source/hero-original.webp`
+  (owner-supplied copy of the stats-photo original; stats-v1 files kept).
+  Licence UNCONFIRMED: owner must confirm rights before launch — see
+  `assets-source/CREDITS.md` (dated 2026-10-22). Outputs in
+  `public/assets/hero-v1/` carry a 1-year immutable cache rule.
+- Hero reveal effect REMOVED at the user's direction (2026-10-22): the
+  hero is a plain solid-black section with the glass card + ScrollBadge.
+  The engine files (`src/hero/Reveal.tsx`, `src/hero/config.ts`) are kept
+  in the repo as dead code (nothing imports them; the lazy chunk is gone
+  from the build). `src/components/HeroSection.tsx/.css` were simplified
+  accordingly; `#chapter-01` id and the sticky `.hero-stage` remain.
+- Chapter 05 finale (ring + dial + `PLACEHOLDER — Register your
+  interest` button) REMOVED at the user's direction (2026-10-22): the
+  story ends after the card-05 pin; KeyNumbers follows directly.
+  Removed: `.story-finale*` JSX in `StoryScroll.tsx`, the whole finale
+  CSS block, `onFinale`/`--finale-p` in the runner, and
+  `site.story.finale` (data + interface). A real CTA for card 05 is
+  still an OPEN question (see docs/BRIEF.md).
+- Bug fixed while verifying (2026-10-22): on a fresh load the
+  `.story` section never carried `data-active=""` (the runner skipped
+  `onActive(null)` because null was its initial value), so the
+  hide-on-hero CSS rule failed and the Thread rail showed over the hero.
+  `StoryScroll.tsx` now seeds `setClass(null)` before the runner starts.

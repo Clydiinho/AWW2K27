@@ -33,9 +33,6 @@ export default function StoryScroll() {
       section.dataset.active = id ?? "";
       setActiveId(id);
     };
-    const onFinale = (q: number) => {
-      section.style.setProperty("--finale-p", `${q}`);
-    };
     const onStory = (p: number) => {
       section.style.setProperty("--story-p", p.toFixed(4));
     };
@@ -45,13 +42,16 @@ export default function StoryScroll() {
     }
     if (!state.manifest) return;
     if (!canvasRef.current) return;
+    // the hide-on-hero CSS states match data-active="" — seed the attribute
+    // before the runner's first pass (null is the runner's initial value, so
+    // computeActive alone would never emit the change)
+    setClass(null);
     const runner = createRunner({
       section,
       canvas: canvasRef.current,
       state: () => stateRef.current,
       onActive: setClass,
-      onFinale,
-      onStory,
+      onStory: onStory,
       ensure: id => engineRef.current?.ensure(id),
     });
     runner.start();
@@ -184,27 +184,6 @@ export default function StoryScroll() {
           );
         })}
       </div>
-      {chapters.some(c => c.id === "05") && (
-        <div className="story-finale" data-finale="ch05" data-static={posterMode ? "1" : "0"}>
-          <div className="story-finale-stage" aria-hidden="true">
-            <svg className="finale-ring" viewBox="0 0 200 200">
-              <circle className="finale-ring-circle" cx="100" cy="100" r="88" pathLength="100" />
-            </svg>
-            <div className="finale-dial">
-              {FINALE_TICKS.map(i => (
-                <span key={i} className={`finale-tick finale-tick--${i}`} />
-              ))}
-              <span className="finale-dial-hand" />
-              <span className="finale-dial-pivot" />
-            </div>
-            <div className="story-finale-cta">
-              <a href="#register" className="finale-cta-button" aria-label={site.story.finale.ctaAria}>
-                {site.story.finale.cta}
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
@@ -233,5 +212,3 @@ function panelSide(chId: string): string {
 function tierName(): "desktop" | "mobile" {
   return typeof window !== "undefined" && window.matchMedia("(max-width: 860px)").matches ? "mobile" : "desktop";
 }
-
-const FINALE_TICKS = Array.from({ length: 12 }, (_, i) => i);

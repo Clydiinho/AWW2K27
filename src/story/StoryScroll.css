@@ -1,6 +1,5 @@
-/* Story scroll: sticky full-viewport canvas + chapter copy panels + ch05 finale.
-   Animation budgetAGENTS rule: transform and opacity only (plus stroke-dashoffset
-   on the single finale ring, consistent with the preloader's progress arc). */
+/* Story scroll: sticky full-viewport canvas + chapter copy panels.
+   Animation budget rule: transform and opacity only. */
 
 :root {
   --story-band: #050505;
@@ -270,146 +269,10 @@
   .story-panel-glass { backdrop-filter: var(--panel-blur); -webkit-backdrop-filter: var(--panel-blur); }
 }
 
-/* Chapter 05 CSS finale */
-.story-finale {
-  position: relative;
-  height: 130vh;
-  z-index: 1;
-  color: var(--color-ivory);
-}
-
-.story-finale-stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  display: grid;
-  place-items: center;
-  background: var(--color-bg);
-  pointer-events: none;
-}
-
-.finale-ring {
-  position: absolute;
-  width: min(64vmin, 480px);
-  aspect-ratio: 1;
-  transform: translateY(46vh) scale(0.4);
-  opacity: 0;
-}
-
-.finale-ring-circle {
-  fill: none;
-  stroke: var(--color-gold);
-  stroke-width: 1.6;
-  stroke-dasharray: 100;
-  /* --finale-p (0..1) drives the draw-in; matches the preloader arc pattern */
-  stroke-dashoffset: calc(100 - min(100, calc(var(--finale-p, 0) * 220)));
-}
-
-.finale-dial {
-  position: absolute;
-  width: min(64vmin, 480px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  transform: translateY(46vh) scale(0.4);
-  opacity: 0;
-  transition: none;
-}
-
-.finale-dial-hand {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1.5px;
-  height: 26%;
-  background: var(--color-ivory);
-  transform-origin: 50% 100%;
-  transform: translate(-50%, -100%) rotate(19deg);
-  opacity: 0.9;
-}
-
-.finale-dial-pivot {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-gold);
-  transform: translate(-50%, -50%);
-}
-
-.finale-tick {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1px;
-  height: 50%;
-  transform-origin: 50% 100%;
-  transform: translate(-50%, -100%) rotate(calc(var(--tick-angle)));
-}
-.finale-tick::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 6%;
-  width: 2px;
-  height: 4.5%;
-  background: rgb(241 235 224 / 0.75);
-}
-.finale-tick--1 { --tick-angle: 30deg; }
-.finale-tick--2 { --tick-angle: 60deg; }
-.finale-tick--3 { --tick-angle: 90deg; }
-.finale-tick--4 { --tick-angle: 120deg; }
-.finale-tick--5 { --tick-angle: 150deg; }
-.finale-tick--6 { --tick-angle: 180deg; }
-.finale-tick--7 { --tick-angle: 210deg; }
-.finale-tick--8 { --tick-angle: 240deg; }
-.finale-tick--9 { --tick-angle: 270deg; }
-.finale-tick--10 { --tick-angle: 300deg; }
-.finale-tick--11 { --tick-angle: 330deg; }
-
-/* phases mapped to --finale-p ranges (ring in 0-0.35, contract 0.35-0.75, dial keep, cta 0.75-1) */
-.story-finale[data-static="0"] .finale-ring {
-  opacity: calc(min(1, var(--finale-p, 0) * 3));
-}
-.story-finale[data-static="0"] .story-finale-stage > .finale-dial {
-  opacity: calc(min(1, max(0, (var(--finale-p, 0) - 0.35) * 2.5)) * 0.95);
-}
-.story-finale[data-static="0"] .finale-dial,
-.story-finale[data-static="0"] .finale-ring {
-  transform: translateY(0) scale(calc(1 - min(0.38, max(0, (var(--finale-p, 0) - 0.35) * 1.05))));
-}
-
-.story-finale-cta {
-  position: absolute;
-  left: 50%;
-  top: 70svh;
-  transform: translateX(-50%);
-  opacity: calc(max(0, (var(--finale-p, 0) - 0.8) * 5));
-  pointer-events: auto;
-}
-
-.finale-cta-button {
-  display: inline-block;
-  font: 600 0.8rem/1 var(--font-sans);
-  letter-spacing: 0.14em;
-  color: var(--color-bg);
-  background: var(--color-gold);
-  border: 1px solid var(--color-gold);
-  border-radius: 2px;
-  padding: 15px 26px;
-  text-decoration: none;
-}
-.finale-cta-button:hover { background: var(--color-bronze); border-color: var(--color-bronze); }
-
-/* Poster mode / reduced motion: plain flow, posters in band colours,
-   finale pinned to its final composed state */
+/* Poster mode / reduced motion: plain flow, posters in band colours */
 @media (prefers-reduced-motion: reduce) {
   .story-panel { transition: none; opacity: 1; transform: none; }
   .story-panel-tilt { transform: none !important; }
-  .story-finale[data-static="1"] .finale-ring { opacity: 0.95; transform: none; }
-  .story-finale[data-static="1"] .finale-dial { opacity: 0.95; transform: none; }
-  .story-finale[data-static="1"] .story-finale-cta { opacity: 1; }
 }
 
 .story--poster .story-stage, .story--poster .story-canvas { display: none; }
@@ -429,4 +292,3 @@
 
 .story--poster .story-chapter { height: auto !important; min-height: 100svh; display: grid; grid-template-rows: minmax(100svh, max-content) 1fr; }
 .story--poster .story-chapter .story-panel { position: static; margin-block: 12vh 18vh; }
-.story--poster .story-finale { height: 100svh; }

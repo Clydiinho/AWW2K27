@@ -1,29 +1,57 @@
+/* Hero — solid black full-viewport section with the invitation card. The
+   sticky stage is kept so any later effect can re-use the pinned layout. */
+
 .hero {
   position: relative;
-  min-height: 100svh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(14px, 2.4vmin, 24px);
-  text-align: center;
-  padding: 96px 24px 48px;
-  padding-left: max(24px, env(safe-area-inset-left));
-  padding-right: max(24px, env(safe-area-inset-right));
+  isolation: isolate;
   background: var(--color-bg);
 }
 
-.hero > * {
-  position: relative;
-  z-index: 1;
+.hero-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 96px 24px 84px;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
 }
 
-.hero-ether {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+/* --- glass card (the invitation) --- */
+
+/* --- glass card (the invitation) --- */
+
+.hero-card {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 2.4vmin, 24px);
+  max-width: min(100%, 34rem);
+  padding: clamp(1.5rem, 4svh, 2.5rem) clamp(1.25rem, 5vw, 2.5rem);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(
+      165deg,
+      rgba(216, 185, 122, 0.07),
+      rgba(216, 185, 122, 0) 45%
+    ),
+    rgba(12, 10, 9, 0.74);
+}
+
+/* blur only on capable desktops */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  @media (min-width: 861px) {
+    .hero-card {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+  }
 }
 
 .hero-eyebrow {
@@ -73,13 +101,14 @@
   color: var(--color-gold);
 }
 
-/* Scroll badge mount: in the hero flow under the tagline, always in view
-   without scrolling, above the LiquidEther layer. Fades in after the
-   preloader completes. */
+/* --- scroll badge: pinned to the bottom of the stage --- */
+
 .hero .scroll-badge {
-  position: relative;
-  z-index: 2;
-  margin-top: clamp(12px, 3vmin, 24px);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: clamp(1.25rem, 4svh, 2.5rem);
+  z-index: 4;
   animation: hero-badge-in 600ms ease both;
 }
 

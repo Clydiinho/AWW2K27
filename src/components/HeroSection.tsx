@@ -1,19 +1,15 @@
-import { useMemo } from "react";
+import { useRef } from "react";
 import { site } from "../content/site";
-import LiquidEther from "./LiquidEther";
 import ScrollBadge from "./ScrollBadge";
 import "./HeroSection.css";
 
-// Landing hero: invitation copy over the LiquidEther gold fluid backdrop.
-// Editorial content beyond this ships in a later step.
+// Landing hero: solid black background with the invitation copy inside the
+// glass card. Editorial copy stays verbatim in site.ts; only grouping and
+// per-word styling live here.
 export default function HeroSection() {
   const copy = site.invitation;
-  const reducedMotion = useMemo(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    [],
-  );
+  const sectionRef = useRef<HTMLElement>(null);
+
   // Approved three-line lockup: WELCOME / TO AFRICA / WATCH WEEK,
   // with "WELCOME TO" in sans and the rest in Griffiths. The verbatim
   // string in site.ts is never altered; only grouping and per-word
@@ -23,39 +19,34 @@ export default function HeroSection() {
   const isSansWord = (i: number) => i < 2;
 
   return (
-    <section className="hero" aria-labelledby="hero-headline">
-      {!reducedMotion && (
-        <div className="hero-ether" aria-hidden="true">
-          <LiquidEther
-            colors={["#000000", "#eab308", "#000000"]}
-            mouseForce={11}
-            cursorSize={75}
-            persistence={0.75}
-            autoDemo
-            autoSpeed={0.5}
-            autoIntensity={2.2}
-            intensity={0.85}
-          />
-        </div>
-      )}
-      <p className="hero-eyebrow">{copy.eyebrow}</p>
-      <h1 id="hero-headline" className="hero-headline">
-        {headlineLines.map((line, li) => (
-          <span key={li} className="hero-line">
-            {line.map((wi, k) => (
-              <span
-                key={k}
-                className={isSansWord(wi) ? undefined : "hero-headline-serif"}
-              >
-                {headlineWords[wi]}
-                {k < line.length - 1 ? " " : ""}
+    <section
+      id="chapter-01"
+      ref={sectionRef}
+      className="hero"
+      aria-labelledby="hero-headline"
+    >
+      <div className="hero-stage">
+        <div className="hero-card">
+          <p className="hero-eyebrow">{copy.eyebrow}</p>
+          <h1 id="hero-headline" className="hero-headline">
+            {headlineLines.map((line, li) => (
+              <span key={li} className="hero-line">
+                {line.map((wi, k) => (
+                  <span
+                    key={k}
+                    className={isSansWord(wi) ? undefined : "hero-headline-serif"}
+                  >
+                    {headlineWords[wi]}
+                    {k < line.length - 1 ? " " : ""}
+                  </span>
+                ))}
               </span>
             ))}
-          </span>
-        ))}
-      </h1>
-      <p className="hero-tagline">{copy.tagline}</p>
-      <ScrollBadge />
+          </h1>
+          <p className="hero-tagline">{copy.tagline}</p>
+        </div>
+        <ScrollBadge />
+      </div>
     </section>
   );
 }
