@@ -382,5 +382,14 @@ never into the code.
   the sheet with a 3-layer soft dark text-shadow (rgb(12 10 9) 0.70
   hairline / 0.45 close glow / 0.35 wide glow; set on .story-panel-head
   and .next-link) so they stay legible on the 0.80 sheet — user choice
-  2026-10-23 "keep colors + dark shadow" after ivory/gold dropped
+Blocked: the
+  production CSS minifier (vite 8/rolldown lightningcss, default baseline
+  includes Safari < 15.4) emitted `-webkit-backdrop-filter` ONLY and dropped
+  the standard `backdrop-filter`; Chromium has never supported the -webkit
+  alias, so the whole live card glass lost its blur while localhost (dev,
+  unminified) looked right. Fixed by `tools/fix-css.mjs` (post-build step
+  wired into `npm run build`: restores `backdrop-filter:<value>` before every
+  -webkit one; 4 declarations in 2 files, incl. the hero card's blurs).
+  Verified: patched prod build computes blur(28px) on `.story-panel`
+  — user choice "keep colors + dark shadow" after ivory/gold dropped
   contrast on the whiter sheet; verified readable at 390 and 1440.
