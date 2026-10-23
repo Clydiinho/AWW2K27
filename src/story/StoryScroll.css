@@ -78,7 +78,7 @@
   border-radius: 28px;
   /* hybrid sheet: milky vertical gradient reads denser than the old flat
      0.10 fill; inset top highlight lights the edge like real glass */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.33) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.80) 0%, rgba(255, 255, 255, 0.60) 100%);
   backdrop-filter: blur(21px);
   -webkit-backdrop-filter: blur(21px);
   box-shadow:
@@ -112,7 +112,16 @@
    inset lives on the wrapper now, so head and link align with the glass
    text edge and their max-content + the wrapper padding still produces the
    same preferred width as the old padded panel */
-.story-panel-head { margin: 0 0 0.9em; }
+.story-panel-head {
+  margin: 0 0 0.9em;
+  /* soft dark shadow lifts the ivory headline + gold eyebrow off the 0.80
+     white sheet on bright video frames (user choice: keep colors, shadow)
+     text-shadow inherits to both children */
+  text-shadow:
+    0 1px 2px rgb(12 10 9 / 0.70),
+    0 2px 6px rgb(12 10 9 / 0.45),
+    0 5px 18px rgb(12 10 9 / 0.35);
+}
 .story-panel-glass ~ .cta-button,
 .story-panel-glass ~ .next-link { margin-top: 1em; }
 

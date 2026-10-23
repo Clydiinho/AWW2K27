@@ -12,6 +12,12 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-gold);
+  /* soft dark shadow lifts the gold label off the white outer sheet on
+     bright video frames (user choice: keep colors, shadow) */
+  text-shadow:
+    0 1px 2px rgb(12 10 9 / 0.70),
+    0 2px 6px rgb(12 10 9 / 0.45),
+    0 5px 18px rgb(12 10 9 / 0.35);
   text-decoration: none;
 }
 
