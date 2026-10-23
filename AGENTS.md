@@ -366,30 +366,35 @@ never into the code.
   gem + ring + halo still playhead-jump to the rail centre. Verified via
   CDP audit: numbers always 02..05 in order, no clipping (l:52 @1440),
   uniform gaps, no overlaps; hidden <861px unchanged.
-- Card glass redesigned per user approval (2026-10-23, "hybrid: white
-  sheet + dark inner"): outer `.story-panel` is a brighter white
+- Card glass redesigned per user direction (2026-10-23, "hybrid: white
+  sheet + dark inner"), latest values: outer `.story-panel` white
   glassmorphism sheet — border rgba(255,255,255,0.26), fill
-  linear-gradient(180deg, rgba(255,255,255,0.64), rgba(255,255,255,0.38))
-  (reduced per user request 2026-10-23 from 0.80/0.60),
-  `backdrop-filter: blur(28px)` (per user
-  instruction 2026-10-23, raised from 21; the outer card also blurs the
-  video);
-  inset top highlight + soft black drop shadow;
-  `inner .story-panel-glass` is denser/darker: --panel-alpha 0.94 (phone) /
-  0.78 (>=861px, reduced per user request 2026-10-23 from 0.96/0.90) with `--panel-blur: blur(36px)
-  saturate(160%)` on desktop, plus a champagne-tinted top wash
-  (rgb(216 185 122 / 0.10)). Headline/eyebrow/NEXT still sit directly on
-  the sheet with a 3-layer soft dark text-shadow (rgb(12 10 9) 0.70
-  hairline / 0.45 close glow / 0.35 wide glow; set on .story-panel-head
-  and .next-link) so they stay legible on the 0.80 sheet — user choice
-Blocked: the
-  production CSS minifier (vite 8/rolldown lightningcss, default baseline
-  includes Safari < 15.4) emitted `-webkit-backdrop-filter` ONLY and dropped
-  the standard `backdrop-filter`; Chromium has never supported the -webkit
-  alias, so the whole live card glass lost its blur while localhost (dev,
-  unminified) looked right. Fixed by `tools/fix-css.mjs` (post-build step
-  wired into `npm run build`: restores `backdrop-filter:<value>` before every
-  -webkit one; 4 declarations in 2 files, incl. the hero card's blurs).
-  Verified: patched prod build computes blur(28px) on `.story-panel`
-  — user choice "keep colors + dark shadow" after ivory/gold dropped
+  linear-gradient(180deg, rgba(255,255,255,0.46), rgba(255,255,255,0.26))
+  (iteratively lowered: 0.80/0.60 → 0.70/0.33 → 0.80/0.60 → 0.64/0.38 →
+  0.46/0.26), `backdrop-filter: blur(28px)` (the outer card also blurs
+  the video); inset top highlight + soft black drop shadow;
+  `inner .story-panel-glass` is denser/darker: --panel-alpha 0.82 (phone) /
+  0.66 (>=861px) with `--panel-blur: blur(36px) saturate(170%)` on desktop,
+  plus a champagne-tinted top wash (rgb(216 185 122 / 0.10)).
+  Headline/eyebrow/NEXT sit directly on the sheet with a 3-layer soft dark
+  text-shadow (rgb(12 10 9) 0.70 hairline / 0.45 close glow / 0.35 wide
+  glow; set on .story-panel-head and .next-link) so they stay legible —
+  user choice "keep colors + dark shadow" after ivory/gold dropped
   contrast on the whiter sheet; verified readable at 390 and 1440.
+- PROD CSS BUG (fixed 2026-10-23): the production CSS minifier (vite 8 /
+  rolldown lightningcss, default baseline includes Safari < 15.4) emitted
+  `-webkit-backdrop-filter` ONLY and dropped the std `backdrop-filter`;
+  Chromium has never supported the -webkit alias, so all live glass lost
+  its blur. `tools/fix-css.mjs` restores `backdrop-filter:<value>` before
+  each -webkit one (4 decls in 2 files). SECOND bug in the same fix:
+  the original greedy regex in fix-css.mjs also matched the
+  `-webkit-backdrop-filter` token inside an `@supports` PRELUDE in the
+  bundled index css — the substitution duplicated the condition fragment,
+  producing unbalanced `)){` garbage that made the browser drop EVERY
+  rule after `.site-header` in that stylesheet (only 27 of 91 rules
+  parsed; production hero/header/body styles were all dead — user saw the
+  unstyled hero + giant 500px badge on aww-2-k27.vercel.app). Regex now
+  anchors to real declarations only (preceded by `;`/`{`, value free of
+  braces), @supports prelude stays intact. Verified: bundled index css
+  parses 91 rules at 390 on vite preview; hero lockup, eyebrow, tagline
+  and 72px scroll badge all styled.

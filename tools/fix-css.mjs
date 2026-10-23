@@ -14,7 +14,11 @@ for (const name of fs.readdirSync(dir)) {
   if (!name.endsWith('.css')) continue;
   const p = path.join(dir, name);
   const css = fs.readFileSync(p, 'utf8');
-  const out = css.replace(/-webkit-backdrop-filter:([^;}]+)/g, (m, value) => (fixes++, `backdrop-filter:${value};-webkit-backdrop-filter:${value}`));
+  // Anchor to a real declaration (preceded by `;` or `{`, value free of
+  // braces): the greedy pre-fix regex also ate the `-webkit-...` token inside
+  // an `@supports` PRELUDE (where it is preceded by `(`), corrupting the
+  // condition and swallowing every later rule in the bundled stylesheet.
+  const out = css.replace(/([;{])(-webkit-backdrop-filter:)([^;{}]+)/g, (m, sep, prop, value) => (fixes++, `${sep}backdrop-filter:${value};-webkit-backdrop-filter:${value}`));
   if (out !== css) { files++; fs.writeFileSync(p, out); }
 }
 console.log(`fix-css: restored ${fixes} standard backdrop-filter declaration(s) in ${files} file(s)`);

@@ -4,7 +4,7 @@
 :root {
   --story-band: #050505;
   --story-band-05: #0d1518;
-  --panel-alpha: 0.94;
+  --panel-alpha: 0.82;
   --panel-blur: none;
 }
 
@@ -50,12 +50,11 @@
   align-items: start;
 }
 
-/* Glass panels (hybrid, approved 2026-10-23: outer white sheet — vertical
-   0.20→0.07 gradient fill, 0.26 hairline, inset top highlight, contact
-   shadow; inner dark glass — champagne-tinted gradient top, alpha 0.92 phone
-   (no backdrop-filter) / 0.80 + blur(20px) saturate(160%) desktop, darkened
-   from the earlier 0.86 / 0.66 per user instruction that cards read too
-   transparent.
+/* Glass panels (2026-10-23: outer white sheet — vertical 0.46→0.26 gradient
+   fill, 0.26 hairline, inset top highlight, contact shadow; inner dark glass
+   — champagne-tinted gradient top, alpha 0.82 phone (no backdrop-filter) /
+   0.66 + blur(36px) saturate(170%) desktop. Values iterated with the user,
+   who kept asking for less white so the video shows through.
    Content-driven sizing: one base font-size, everything inside in em/ch, no
    fixed heights, no clipping — card height is always the natural text height,
    width follows the text via fit-content. The eyebrow + headline + NEXT link
@@ -78,7 +77,7 @@
   border-radius: 28px;
   /* hybrid sheet: milky vertical gradient reads denser than the old flat
      0.10 fill; inset top highlight lights the edge like real glass */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.64) 0%, rgba(255, 255, 255, 0.38) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.46) 0%, rgba(255, 255, 255, 0.26) 100%);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
   box-shadow:
@@ -282,7 +281,7 @@
 }
 
 @media (min-width: 861px) {
-  :root { --panel-alpha: 0.78; --panel-blur: blur(36px) saturate(170%); }
+  :root { --panel-alpha: 0.66; --panel-blur: blur(36px) saturate(170%); }
   .story-panel,
   .story-panel-glass { backdrop-filter: var(--panel-blur); -webkit-backdrop-filter: var(--panel-blur); }
 }
