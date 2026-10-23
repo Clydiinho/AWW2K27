@@ -79,8 +79,8 @@
   /* hybrid sheet: milky vertical gradient reads denser than the old flat
      0.10 fill; inset top highlight lights the edge like real glass */
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.80) 0%, rgba(255, 255, 255, 0.60) 100%);
-  backdrop-filter: blur(21px);
-  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.35),
     0 18px 50px rgba(0, 0, 0, 0.35);
@@ -282,7 +282,7 @@
 }
 
 @media (min-width: 861px) {
-  :root { --panel-alpha: 0.90; --panel-blur: blur(28px) saturate(170%); }
+  :root { --panel-alpha: 0.90; --panel-blur: blur(36px) saturate(170%); }
   .story-panel,
   .story-panel-glass { backdrop-filter: var(--panel-blur); -webkit-backdrop-filter: var(--panel-blur); }
 }

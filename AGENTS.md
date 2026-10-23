@@ -371,11 +371,12 @@ never into the code.
   glassmorphism sheet — border rgba(255,255,255,0.26), fill
   linear-gradient(180deg, rgba(255,255,255,0.80), rgba(255,255,255,0.60))
   (0.80/0.60 per user choice 2026-10-23, "both higher overall"),
-  `backdrop-filter: blur(21px)` (per user instruction 2026-10-23; the
-  outer card now also blurs the video);
+  `backdrop-filter: blur(28px)` (per user
+  instruction 2026-10-23, raised from 21; the outer card also blurs the
+  video);
   inset top highlight + soft black drop shadow;
   `inner .story-panel-glass` is denser/darker: `--panel-alpha` 0.96 (phone) /
-  0.90 (>=861px) with `--panel-blur: blur(28px)
+  0.90 (>=861px) with `--panel-blur: blur(36px)
   saturate(160%)` on desktop, plus a champagne-tinted top wash
   (rgb(216 185 122 / 0.10)). Headline/eyebrow/NEXT still sit directly on
   the sheet with a 3-layer soft dark text-shadow (rgb(12 10 9) 0.70
