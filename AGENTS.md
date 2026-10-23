@@ -357,3 +357,22 @@ never into the code.
   `onActive(null)` because null was its initial value), so the
   hide-on-hero CSS rule failed and the Thread rail showed over the hero.
   `StoryScroll.tsx` now seeds `setClass(null)` before the runner starts.
+- Thread rail numbers fixed (2026-10-23): the number pills previously
+  lived inside `.thread-node`, so they were clipped off-screen left and
+  the playhead teleport (active gem to rail centre) reordered the visible
+  number sequence (03,02,04). Numbers moved OUT of the nodes into sibling
+  `.thread-num[data-i]` spans that stay at each measured chapter start
+  (`--node-top` set on nodes and nums by Thread.tsx measure()). Active
+  gem + ring + halo still playhead-jump to the rail centre. Verified via
+  CDP audit: numbers always 02..05 in order, no clipping (l:52 @1440),
+  uniform gaps, no overlaps; hidden <861px unchanged.
+- Card glass redesigned per user approval (2026-10-23, "hybrid: white
+  sheet + dark inner"): outer `.story-panel` is a brighter white
+  glassmorphism sheet — border rgba(255,255,255,0.26), fill
+  linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.07)),
+  inset top highlight + soft black drop shadow; inner
+  `.story-panel-glass` is denser/darker: `--panel-alpha` 0.92 (phone) /
+  0.80 (>=861px, was 0.86/0.66) with `--panel-blur: blur(20px)
+  saturate(160%)` on desktop, plus a champagne-tinted top wash
+  (rgb(216 185 122 / 0.10)). Headline/eyebrow/NEXT still sit directly on
+  the sheet; verified readable at 390 and 1440 over bright frames.

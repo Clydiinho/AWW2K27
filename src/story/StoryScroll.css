@@ -4,7 +4,7 @@
 :root {
   --story-band: #050505;
   --story-band-05: #0d1518;
-  --panel-alpha: 0.86;
+  --panel-alpha: 0.92;
   --panel-blur: none;
 }
 
@@ -50,16 +50,18 @@
   align-items: start;
 }
 
-/* Glass panels (approved: alpha 0.86 phone / 0.66 + blur 16px desktop;
-   darkened from the original 0.74 / 0.50 per user instruction).
+/* Glass panels (hybrid, approved 2026-10-23: outer white sheet — vertical
+   0.20→0.07 gradient fill, 0.26 hairline, inset top highlight, contact
+   shadow; inner dark glass — champagne-tinted gradient top, alpha 0.92 phone
+   (no backdrop-filter) / 0.80 + blur(20px) saturate(160%) desktop, darkened
+   from the earlier 0.86 / 0.66 per user instruction that cards read too
+   transparent.
    Content-driven sizing: one base font-size, everything inside in em/ch, no
    fixed heights, no clipping — card height is always the natural text height,
    width follows the text via fit-content. The eyebrow + headline + NEXT link
    sit OUTSIDE the glass but INSIDE the shine-border outline: the wrapper
    owns a 1.5em / 1.25em padding so every child clears the ring line
-   (user instruction), and the outlined wrapper itself is a WHITE
-   glassmorphism sheet — rgba(255,255,255,0.10) fill + white hairline +
-   the desktop 16px backdrop blur (same var as the dark glass). No scrims. */
+   (user instruction). No scrims. */
 
 .story-panel {
   font-size: clamp(0.9375rem, 0.86rem + 0.35vw, 1.0625rem);
@@ -72,9 +74,14 @@
   margin-block: 1.5em;
   margin-inline: clamp(22px, 4vw, 64px);
   padding: 1.25em 1.5em;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.26);
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.10);
+  /* hybrid sheet: milky vertical gradient reads denser than the old flat
+     0.10 fill; inset top highlight lights the edge like real glass */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.07) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 18px 50px rgba(0, 0, 0, 0.35);
   color: var(--color-ivory);
   opacity: 0;
   transform: translateY(10px);
@@ -90,7 +97,7 @@
   inline-size: 100%;
   max-inline-size: none;
   padding: 1.5em;
-  background: linear-gradient(160deg, rgba(20, 16, 12, 0.10) 0%, rgb(12 10 9 / var(--panel-alpha)) 46%);
+  background: linear-gradient(160deg, rgb(216 185 122 / 0.10) 0%, rgb(12 10 9 / var(--panel-alpha)) 46%);
   border: 1px solid var(--color-line);
   border-radius: 1.75em;
   box-shadow:
@@ -264,7 +271,7 @@
 }
 
 @media (min-width: 861px) {
-  :root { --panel-alpha: 0.66; --panel-blur: blur(16px); }
+  :root { --panel-alpha: 0.80; --panel-blur: blur(20px) saturate(160%); }
   .story-panel,
   .story-panel-glass { backdrop-filter: var(--panel-blur); -webkit-backdrop-filter: var(--panel-blur); }
 }
