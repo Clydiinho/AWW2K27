@@ -4,7 +4,7 @@
 :root {
   --story-band: #050505;
   --story-band-05: #0d1518;
-  --panel-alpha: 0.96;
+  --panel-alpha: 0.94;
   --panel-blur: none;
 }
 
@@ -78,7 +78,7 @@
   border-radius: 28px;
   /* hybrid sheet: milky vertical gradient reads denser than the old flat
      0.10 fill; inset top highlight lights the edge like real glass */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.80) 0%, rgba(255, 255, 255, 0.60) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.64) 0%, rgba(255, 255, 255, 0.38) 100%);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
   box-shadow:
@@ -282,7 +282,7 @@
 }
 
 @media (min-width: 861px) {
-  :root { --panel-alpha: 0.90; --panel-blur: blur(36px) saturate(170%); }
+  :root { --panel-alpha: 0.78; --panel-blur: blur(36px) saturate(170%); }
   .story-panel,
   .story-panel-glass { backdrop-filter: var(--panel-blur); -webkit-backdrop-filter: var(--panel-blur); }
 }
