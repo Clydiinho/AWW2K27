@@ -369,10 +369,11 @@ never into the code.
 - Card glass redesigned per user approval (2026-10-23, "hybrid: white
   sheet + dark inner"): outer `.story-panel` is a brighter white
   glassmorphism sheet — border rgba(255,255,255,0.26), fill
-  linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.07)),
-  inset top highlight + soft black drop shadow; inner
-  `.story-panel-glass` is denser/darker: `--panel-alpha` 0.92 (phone) /
-  0.80 (>=861px, was 0.86/0.66) with `--panel-blur: blur(20px)
+  linear-gradient(180deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14)),
+  inset top highlight + soft black drop shadow, `backdrop-filter:
+  blur(12px)`; inner
+  `.story-panel-glass` is denser/darker: `--panel-alpha` 0.96 (phone) /
+  0.90 (>=861px) with `--panel-blur: blur(28px)
   saturate(160%)` on desktop, plus a champagne-tinted top wash
   (rgb(216 185 122 / 0.10)). Headline/eyebrow/NEXT still sit directly on
   the sheet; verified readable at 390 and 1440 over bright frames.
