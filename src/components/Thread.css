@@ -142,14 +142,17 @@
   opacity: 1;
 }
 
-/* chapter numbers: small tabular figures on a dark scrim. Shown left of the
-   rail on hover-capable/desktop widths ONLY (>=861px): the free gutter left of
-   the cards is ~24px at 1440+ but only ~14px on phones, so on narrow viewports
-   the label would collide with the card glass — hidden there (decorative). */
+/* chapter numbers: small tabular figures on a dark scrim, sitting RIGHT of the
+   rail (the desktop gutter swallows them on the left — at rail_x 40px a pill
+   extending ~42px left clips off the viewport). Numbers stay at their own
+   measured chapter positions (--node-top set on each num by Thread.tsx) and
+   NEVER follow the gem playhead, so the vertical order is always 02-05.
+   Hidden below 861px where the gutter is only ~14px — decorative fallback per
+   the brief. */
 .thread-num {
   position: absolute;
-  right: 1.4em;
-  top: 50%;
+  left: 1.1em;
+  top: var(--node-top, 0%);
   transform: translateY(-50%);
   font: 600 0.7rem/1 var(--font-sans);
   font-variant-numeric: tabular-nums;
@@ -207,11 +210,12 @@
   opacity: 0.8;
 }
 
-/* the current node's number rises to gold with a soft warm glow */
-[data-active="02"] .thread-node[data-i="0"] .thread-num,
-[data-active="03"] .thread-node[data-i="1"] .thread-num,
-[data-active="04"] .thread-node[data-i="2"] .thread-num,
-[data-active="05"] .thread-node[data-i="3"] .thread-num {
+/* the current node's number rises to gold with a soft warm glow (numbers are
+   NOT children of the nodes any more — own selector) */
+[data-active="02"] .thread-num[data-i="0"],
+[data-active="03"] .thread-num[data-i="1"],
+[data-active="04"] .thread-num[data-i="2"],
+[data-active="05"] .thread-num[data-i="3"] {
   color: var(--color-gold);
   opacity: 1;
   text-shadow: 0 0 10px rgba(216, 185, 122, 0.55);

@@ -24,6 +24,7 @@ export default function Thread({ parentRef }: ThreadProps) {
     if (!root || !section) return;
 
     const nodes = Array.from(root.querySelectorAll<HTMLElement>(".thread-node"));
+    const nums = Array.from(root.querySelectorAll<HTMLElement>(".thread-num"));
     const idBox = (id: string) => {
       const el = section.querySelector<HTMLElement>(`[data-chapter="${id}"]`);
       if (!el) return null;
@@ -49,6 +50,7 @@ export default function Thread({ parentRef }: ThreadProps) {
         const anchor = Math.max(ch.top - vh, pin);
         const p = Math.max(0, Math.min(1, (anchor - storyStart) / (storyEnd - storyStart)));
         node.style.setProperty("--node-top", `${(p * 100).toFixed(4)}%`);
+        nums[i]?.style.setProperty("--node-top", `${(p * 100).toFixed(4)}%`);
       });
     };
 
@@ -79,7 +81,11 @@ export default function Thread({ parentRef }: ThreadProps) {
         <span key={id} className="thread-node" data-i={i}>
           <span className="thread-node-gem" />
           <span className="thread-node-ring" />
-          <span className="thread-num">{id}</span>
+        </span>
+      ))}
+      {THREAD_CHAPTERS.map((id, i) => (
+        <span key={id} className="thread-num" data-i={i}>
+          {id}
         </span>
       ))}
     </div>
