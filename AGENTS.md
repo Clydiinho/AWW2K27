@@ -369,7 +369,10 @@ never into the code.
 - Card glass redesigned per user approval (2026-10-23, "hybrid: white
   sheet + dark inner"): outer `.story-panel` is a brighter white
   glassmorphism sheet — border rgba(255,255,255,0.26), fill
-  linear-gradient(180deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14)),
+  linear-gradient(180deg, rgba(255,255,255,0.70), rgba(255,255,255,0.33))
+  (0.70 top per user instruction 2026-10-23; bottom kept at the 14/30
+  falloff ratio ≈ 0.33), `backdrop-filter: blur(21px)` (per user
+  instruction 2026-10-23; the outer card now also blurs the video),
   inset top highlight + soft black drop shadow, `backdrop-filter:
   blur(12px)`; inner
   `.story-panel-glass` is denser/darker: `--panel-alpha` 0.96 (phone) /
